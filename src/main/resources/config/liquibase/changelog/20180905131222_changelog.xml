@@ -1,0 +1,308 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="qk (generated)" id="1536153356969-1">
+        <createTable tableName="mxpms_search_equipment">
+            <column autoIncrement="true" name="id" type="NUMBER(19, 0)">
+                <constraints primaryKey="true" primaryKeyName="mxpms_search_equipmentPK"/>
+            </column>
+            <column name="bzname" type="VARCHAR2(255 CHAR)"/>
+            <column name="exvalue" type="VARCHAR2(255 CHAR)"/>
+            <column name="haschildren" type="VARCHAR2(255 CHAR)"/>
+            <column name="imgurl" type="VARCHAR2(255 CHAR)"/>
+            <column name="itemtype" type="VARCHAR2(255 CHAR)"/>
+            <column name="name" type="VARCHAR2(255 CHAR)"/>
+            <column name="nodemodel" type="VARCHAR2(255 CHAR)"/>
+            <column name="nodewhbz" type="VARCHAR2(255 CHAR)"/>
+            <column name="nodeyxzt" type="VARCHAR2(255 CHAR)"/>
+            <column name="obj_id" type="VARCHAR2(255 CHAR)"/>
+            <column name="orderid" type="VARCHAR2(255 CHAR)"/>
+            <column name="orgid" type="VARCHAR2(255 CHAR)"/>
+            <column name="pid" type="VARCHAR2(255 CHAR)"/>
+            <column name="treeid" type="VARCHAR2(255 CHAR)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-2">
+        <addColumn tableName="mask">
+            <column name="crtxbh_1" type="varchar2(255 CHAR)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-3">
+        <addColumn tableName="mask">
+            <column name="crtxbh_2" type="varchar2(255 CHAR)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-4">
+        <addColumn tableName="mask">
+            <column name="sj_cd" type="varchar2(255 CHAR)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-5">
+        <addColumn tableName="t_bdatafile">
+            <column name="tb_file_name" type="varchar2(255 CHAR)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-6">
+        <addColumn tableName="t_bdatafile">
+            <column name="tb_file_type" type="varchar2(255 CHAR)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-7">
+        <createIndex indexName="IX_maskPK" tableName="mask" unique="true">
+            <column name="id"/>
+        </createIndex>
+        <addPrimaryKey columnNames="id" constraintName="maskPK" forIndexName="IX_maskPK" tableName="mask"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-8">
+        <dropTable tableName="T_SB_DYSB_DYBLQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-9">
+        <dropTable tableName="T_SB_DYSB_DYBX_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-10">
+        <dropTable tableName="T_SB_DYSB_DYDLD_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-11">
+        <dropTable tableName="T_SB_DYSB_DYDLFZX_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-12">
+        <dropTable tableName="T_SB_DYSB_DYDLHGQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-13">
+        <dropTable tableName="T_SB_DYSB_DYDLJT_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-14">
+        <dropTable tableName="T_SB_DYSB_DYDLZD_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-15">
+        <dropTable tableName="T_SB_DYSB_DYDL_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-16">
+        <dropTable tableName="T_SB_DYSB_DYDRQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-17">
+        <dropTable tableName="T_SB_DYSB_DYDX_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-18">
+        <dropTable tableName="T_SB_DYSB_DYGLKG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-19">
+        <dropTable tableName="T_SB_DYSB_DYGT_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-20">
+        <dropTable tableName="T_SB_DYSB_DYKGG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-21">
+        <dropTable tableName="T_SB_DYSB_DYKG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-22">
+        <dropTable tableName="T_SB_DYSB_DYMX_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-23">
+        <dropTable tableName="T_SB_DYSB_DYPDP_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-24">
+        <dropTable tableName="T_SB_DYSB_DYRDQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-25">
+        <dropTable tableName="T_SB_DYSB_DYRSX_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-26">
+        <dropTable tableName="T_SB_DYSB_DYRS_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-27">
+        <dropTable tableName="T_SB_DYSB_DYSYDLBHQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-28">
+        <dropTable tableName="T_SB_DYSB_DYSYDLDZBHQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-29">
+        <dropTable tableName="T_SB_DYSB_DYTQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-30">
+        <dropTable tableName="T_SB_DYSB_DYWGBCZZ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-31">
+        <dropTable tableName="T_SB_DYSB_DYWLG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-32">
+        <dropTable tableName="T_SB_DYSB_DYXL_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-33">
+        <dropTable tableName="T_SB_DYSB_DYZSBLQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-34">
+        <dropTable tableName="T_SB_DYSB_DYZSDRQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-35">
+        <dropTable tableName="T_SB_DYSB_DYZSGLKG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-36">
+        <dropTable tableName="T_SB_DYSB_DYZSKG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-37">
+        <dropTable tableName="T_SB_DYSB_DYZSRDQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-38">
+        <dropTable tableName="T_SB_DYSB_FGDZZ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-39">
+        <dropTable tableName="T_SB_DYSB_QZJ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-40">
+        <dropTable tableName="T_SB_SCFZSS_JCJGJ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-41">
+        <dropTable tableName="T_SB_ZNYC_DKQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-42">
+        <dropTable tableName="T_SB_ZNYC_DLHGQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-43">
+        <dropTable tableName="T_SB_ZNYC_DLQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-44">
+        <dropTable tableName="T_SB_ZNYC_DLZD_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-45">
+        <dropTable tableName="T_SB_ZNYC_DYHGQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-46">
+        <dropTable tableName="T_SB_ZNYC_DZ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-47">
+        <dropTable tableName="T_SB_ZNYC_FHKG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-48">
+        <dropTable tableName="T_SB_ZNYC_GLKG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-49">
+        <dropTable tableName="T_SB_ZNYC_GZZSQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-50">
+        <dropTable tableName="T_SB_ZNYC_JGDY_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-51">
+        <dropTable tableName="T_SB_ZNYC_JYZ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-52">
+        <dropTable tableName="T_SB_ZNYC_KGG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-53">
+        <dropTable tableName="T_SB_ZNYC_MX_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-54">
+        <dropTable tableName="T_SB_ZNYC_PDBYQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-55">
+        <dropTable tableName="T_SB_ZNYC_RDQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-56">
+        <dropTable tableName="T_SB_ZNYC_SYB_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-57">
+        <dropTable tableName="T_SB_ZNYC_ZBYQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-58">
+        <dropTable tableName="T_SB_ZNYC_ZNDL_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-59">
+        <dropTable tableName="T_SB_ZWYC_DAOXIAN_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-60">
+        <dropTable tableName="T_SB_ZWYC_DLD_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-61">
+        <dropTable tableName="T_SB_ZWYC_DLFZX_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-62">
+        <dropTable tableName="T_SB_ZWYC_DLJT_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-63">
+        <dropTable tableName="T_SB_ZWYC_DLZD_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-64">
+        <dropTable tableName="T_SB_ZWYC_DL_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-65">
+        <dropTable tableName="T_SB_ZWYC_DXD_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-66">
+        <dropTable tableName="T_SB_ZWYC_GT_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-67">
+        <dropTable tableName="T_SB_ZWYC_JYZ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-68">
+        <dropTable tableName="T_SB_ZWYC_PDXL_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-69">
+        <dropTable tableName="T_SB_ZWYC_WLG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-70">
+        <dropTable tableName="T_SB_ZWYC_XLBLQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-71">
+        <dropTable tableName="T_SB_ZWYC_XLGZZSQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-72">
+        <dropTable tableName="T_SB_ZWYC_XLJCKY_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-73">
+        <dropTable tableName="T_SB_ZWYC_XL_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-74">
+        <dropTable tableName="T_SB_ZWYC_ZSBYQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-75">
+        <dropTable tableName="T_SB_ZWYC_ZSCHQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-76">
+        <dropTable tableName="T_SB_ZWYC_ZSDLHGQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-77">
+        <dropTable tableName="T_SB_ZWYC_ZSDLQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-78">
+        <dropTable tableName="T_SB_ZWYC_ZSDLSRDQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-79">
+        <dropTable tableName="T_SB_ZWYC_ZSDRQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-80">
+        <dropTable tableName="T_SB_ZWYC_ZSDYHGQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-81">
+        <dropTable tableName="T_SB_ZWYC_ZSFHKG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-82">
+        <dropTable tableName="T_SB_ZWYC_ZSGLKG_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-83">
+        <dropTable tableName="T_SB_ZWYC_ZSTRBYQ_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-84">
+        <dropTable tableName="T_SB_ZWYC_ZYYHJRD_E"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-85">
+        <dropColumn columnName="CRTXBH1" tableName="MASK"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-86">
+        <dropColumn columnName="CRTXBH2" tableName="MASK"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-87">
+        <dropColumn columnName="FILE_NAME" tableName="T_BDATAFILE"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-88">
+        <dropColumn columnName="FILE_TYPE" tableName="T_BDATAFILE"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-89">
+        <dropColumn columnName="SJCD" tableName="MASK"/>
+    </changeSet>
+    <changeSet author="qk (generated)" id="1536153356969-90">
+        <alterSequence sequenceName="hibernate_sequence"/>
+        <alterSequence sequenceName="hibernate_sequence"/>
+        <alterSequence sequenceName="hibernate_sequence"/>
+        <alterSequence sequenceName="hibernate_sequence"/>
+        <alterSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,74 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "ch",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dybh",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sjqhb",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sjCD",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "zs",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "crtxbh1",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "crtxbh2",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cdcstxwhiteblack",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cdcstxmbcc",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "cdcstxgc",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "qxdx",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "qxmd",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "tzjd",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "remark",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "aaa",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20180905130132",
+    "javadoc": "掩模明细.",
+    "entityTableName": "mask",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "angularJSSuffix": "mySuffix"
+}

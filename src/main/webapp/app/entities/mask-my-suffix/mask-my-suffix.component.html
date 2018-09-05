@@ -1,0 +1,94 @@
+<div>
+    <h2>
+        <span>Masks</span>
+        <button class="btn btn-primary float-right jh-create-entity create-mask-my-suffix" [routerLink]="['/', { outlets: { popup: ['mask-my-suffix-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Mask
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="masks">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="ch"><span>Ch</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dybh"><span>Dybh</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="sjqhb"><span>Sjqhb</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="sjCD"><span>Sj CD</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="zs"><span>Zs</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="crtxbh1"><span>Crtxbh 1</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="crtxbh2"><span>Crtxbh 2</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cdcstxwhiteblack"><span>Cdcstxwhiteblack</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cdcstxmbcc"><span>Cdcstxmbcc</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="cdcstxgc"><span>Cdcstxgc</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="qxdx"><span>Qxdx</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="qxmd"><span>Qxmd</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="tzjd"><span>Tzjd</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="remark"><span>Remark</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="aaa"><span>Aaa</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let mask of masks ;trackBy: trackId">
+                <td><a [routerLink]="['../mask-my-suffix', mask.id ]">{{mask.id}}</a></td>
+                <td>{{mask.ch}}</td>
+                <td>{{mask.dybh}}</td>
+                <td>{{mask.sjqhb}}</td>
+                <td>{{mask.sjCD}}</td>
+                <td>{{mask.zs}}</td>
+                <td>{{mask.crtxbh1}}</td>
+                <td>{{mask.crtxbh2}}</td>
+                <td>{{mask.cdcstxwhiteblack}}</td>
+                <td>{{mask.cdcstxmbcc}}</td>
+                <td>{{mask.cdcstxgc}}</td>
+                <td>{{mask.qxdx}}</td>
+                <td>{{mask.qxmd}}</td>
+                <td>{{mask.tzjd}}</td>
+                <td>{{mask.remark}}</td>
+                <td>{{mask.aaa}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../mask-my-suffix', mask.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'mask-my-suffix/'+ mask.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'mask-my-suffix/'+ mask.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="masks && masks.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+/**
+ * 掩模明细.
+ */
+entity Mask {
+    ch String,
+	dybh String,
+	sjqhb String,
+	sjcd String,
+	zs Long,
+	crtxbh1 String,
+	crtxbh2 String,
+	cdcstxwhiteblack String,
+	cdcstxmbcc Long,
+	cdcstxgc Long,
+	qxdx Long,
+	qxmd Long,
+	tzjd Long,
+	remark String,
+	aaa Long
+}
+
+
+paginate Mask with pagination
+
+dto * with mapstruct
+
+service all with serviceImpl
+
+angularSuffix * with mySuffix

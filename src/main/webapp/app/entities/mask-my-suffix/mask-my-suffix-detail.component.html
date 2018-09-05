@@ -1,0 +1,82 @@
+
+<div *ngIf="mask">
+    <h2><span>Mask</span> {{mask.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Ch</span></dt>
+        <dd>
+            <span>{{mask.ch}}</span>
+        </dd>
+        <dt><span>Dybh</span></dt>
+        <dd>
+            <span>{{mask.dybh}}</span>
+        </dd>
+        <dt><span>Sjqhb</span></dt>
+        <dd>
+            <span>{{mask.sjqhb}}</span>
+        </dd>
+        <dt><span>Sj CD</span></dt>
+        <dd>
+            <span>{{mask.sjCD}}</span>
+        </dd>
+        <dt><span>Zs</span></dt>
+        <dd>
+            <span>{{mask.zs}}</span>
+        </dd>
+        <dt><span>Crtxbh 1</span></dt>
+        <dd>
+            <span>{{mask.crtxbh1}}</span>
+        </dd>
+        <dt><span>Crtxbh 2</span></dt>
+        <dd>
+            <span>{{mask.crtxbh2}}</span>
+        </dd>
+        <dt><span>Cdcstxwhiteblack</span></dt>
+        <dd>
+            <span>{{mask.cdcstxwhiteblack}}</span>
+        </dd>
+        <dt><span>Cdcstxmbcc</span></dt>
+        <dd>
+            <span>{{mask.cdcstxmbcc}}</span>
+        </dd>
+        <dt><span>Cdcstxgc</span></dt>
+        <dd>
+            <span>{{mask.cdcstxgc}}</span>
+        </dd>
+        <dt><span>Qxdx</span></dt>
+        <dd>
+            <span>{{mask.qxdx}}</span>
+        </dd>
+        <dt><span>Qxmd</span></dt>
+        <dd>
+            <span>{{mask.qxmd}}</span>
+        </dd>
+        <dt><span>Tzjd</span></dt>
+        <dd>
+            <span>{{mask.tzjd}}</span>
+        </dd>
+        <dt><span>Remark</span></dt>
+        <dd>
+            <span>{{mask.remark}}</span>
+        </dd>
+        <dt><span>Aaa</span></dt>
+        <dd>
+            <span>{{mask.aaa}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'mask-my-suffix/'+ mask.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

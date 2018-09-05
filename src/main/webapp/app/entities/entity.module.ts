@@ -14,6 +14,7 @@ import { JhoraTbDatafileentMySuffixModule } from './tb-datafileent-my-suffix/tb-
 import { JhoraTbDMySuffixModule } from './tb-d-my-suffix/tb-d-my-suffix.module';
 import { JhoraTbEMySuffixModule } from './tb-e-my-suffix/tb-e-my-suffix.module';
 import { JhoraMxpmsSearchEquipmentMySuffixModule } from './mxpms-search-equipment-my-suffix/mxpms-search-equipment-my-suffix.module';
+import { JhoraMaskMySuffixModule } from './mask-my-suffix/mask-my-suffix.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -32,6 +33,7 @@ import { JhoraMxpmsSearchEquipmentMySuffixModule } from './mxpms-search-equipmen
         JhoraTbDMySuffixModule,
         JhoraTbEMySuffixModule,
         JhoraMxpmsSearchEquipmentMySuffixModule,
+        JhoraMaskMySuffixModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

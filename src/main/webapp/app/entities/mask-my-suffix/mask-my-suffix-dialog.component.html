@@ -1,0 +1,100 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myMaskLabel">Create or edit a Mask</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!mask.id">
+            <label for="id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="mask.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_ch">Ch</label>
+            <input type="text" class="form-control" name="ch" id="field_ch"
+                [(ngModel)]="mask.ch" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_dybh">Dybh</label>
+            <input type="text" class="form-control" name="dybh" id="field_dybh"
+                [(ngModel)]="mask.dybh" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_sjqhb">Sjqhb</label>
+            <input type="text" class="form-control" name="sjqhb" id="field_sjqhb"
+                [(ngModel)]="mask.sjqhb" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_sjCD">Sj CD</label>
+            <input type="text" class="form-control" name="sjCD" id="field_sjCD"
+                [(ngModel)]="mask.sjCD" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_zs">Zs</label>
+            <input type="number" class="form-control" name="zs" id="field_zs"
+                [(ngModel)]="mask.zs" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_crtxbh1">Crtxbh 1</label>
+            <input type="text" class="form-control" name="crtxbh1" id="field_crtxbh1"
+                [(ngModel)]="mask.crtxbh1" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_crtxbh2">Crtxbh 2</label>
+            <input type="text" class="form-control" name="crtxbh2" id="field_crtxbh2"
+                [(ngModel)]="mask.crtxbh2" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_cdcstxwhiteblack">Cdcstxwhiteblack</label>
+            <input type="text" class="form-control" name="cdcstxwhiteblack" id="field_cdcstxwhiteblack"
+                [(ngModel)]="mask.cdcstxwhiteblack" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_cdcstxmbcc">Cdcstxmbcc</label>
+            <input type="number" class="form-control" name="cdcstxmbcc" id="field_cdcstxmbcc"
+                [(ngModel)]="mask.cdcstxmbcc" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_cdcstxgc">Cdcstxgc</label>
+            <input type="number" class="form-control" name="cdcstxgc" id="field_cdcstxgc"
+                [(ngModel)]="mask.cdcstxgc" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_qxdx">Qxdx</label>
+            <input type="number" class="form-control" name="qxdx" id="field_qxdx"
+                [(ngModel)]="mask.qxdx" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_qxmd">Qxmd</label>
+            <input type="number" class="form-control" name="qxmd" id="field_qxmd"
+                [(ngModel)]="mask.qxmd" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_tzjd">Tzjd</label>
+            <input type="number" class="form-control" name="tzjd" id="field_tzjd"
+                [(ngModel)]="mask.tzjd" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_remark">Remark</label>
+            <input type="text" class="form-control" name="remark" id="field_remark"
+                [(ngModel)]="mask.remark" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_aaa">Aaa</label>
+            <input type="number" class="form-control" name="aaa" id="field_aaa"
+                [(ngModel)]="mask.aaa" />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

@@ -535,10 +535,10 @@
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                     <driver>oracle.jdbc.OracleDriver</driver>
-                    <url>jdbc:oracle:thin:@localhost:1521:jhora</url>
+                    <url>jdbc:oracle:thin:@45.248.86.155:49161:xe</url>
                     <defaultSchemaName></defaultSchemaName>
-                    <username></username>
-                    <password></password>
+                    <username>dwzy</username>
+                    <password>dwzy</password>
                     <referenceUrl>hibernate:spring:com.mycompany.myapp.domain?dialect=org.hibernate.dialect.Oracle12cDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                     <verbose>true</verbose>
                     <logging>debug</logging>

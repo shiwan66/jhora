@@ -19,7 +19,7 @@ entity MxpmsSearchEquipment {
 	nodewhbz String,
 	nodeyxzt String,
 	orgid String,
-	bzname String,
+	bzname String
 }
 // Set pagination options
 paginate MxpmsSearchEquipment with infinite-scroll
