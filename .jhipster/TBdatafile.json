@@ -1,0 +1,21 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "tbFileName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tbFileType",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180905085858",
+    "entityTableName": "t_bdatafile",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "angularJSSuffix": "mySuffix"
+}

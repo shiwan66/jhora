@@ -1,0 +1,37 @@
+
+<div *ngIf="dBFile">
+    <h2><span>DB File</span> {{dBFile.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>File Name</span></dt>
+        <dd>
+            <span>{{dBFile.fileName}}</span>
+        </dd>
+        <dt><span>File Type</span></dt>
+        <dd>
+            <span>{{dBFile.fileType}}</span>
+        </dd>
+        <dt><span>Data</span></dt>
+        <dd>
+            <div *ngIf="dBFile.data">
+                <a (click)="openFile(dBFile.dataContentType, dBFile.data)">open</a>
+                {{dBFile.dataContentType}}, {{byteSize(dBFile.data)}}
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'db-file-my-suffix/'+ dBFile.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,73 @@
+<div>
+    <h2>
+        <span>DB Files</span>
+        <button class="btn btn-primary float-right jh-create-entity create-db-file-my-suffix" [routerLink]="['/', { outlets: { popup: ['db-file-my-suffix-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new DB File
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="dBFiles">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="fileName"><span>File Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="fileType"><span>File Type</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="data"><span>Data</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let dBFile of dBFiles ;trackBy: trackId">
+                <td><a [routerLink]="['../db-file-my-suffix', dBFile.id ]">{{dBFile.id}}</a></td>
+                <td>{{dBFile.fileName}}</td>
+                <td>{{dBFile.fileType}}</td>
+                <td>
+                    <a *ngIf="dBFile.data" (click)="openFile(dBFile.dataContentType, dBFile.data)">open</a>
+                    <span *ngIf="dBFile.data">{{dBFile.dataContentType}}, {{byteSize(dBFile.data)}}</span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../db-file-my-suffix', dBFile.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'db-file-my-suffix/'+ dBFile.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'db-file-my-suffix/'+ dBFile.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="dBFiles && dBFiles.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+entity tb_Datafile {
+	fileName String,
+    fileType String
+}
+
+paginate Datafilestore with pagination
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with mySuffix
