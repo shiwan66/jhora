@@ -4,6 +4,7 @@ import com.mycompany.myapp.JhoraApp;
 
 import com.mycompany.myapp.domain.MxpmsSearchEquipment;
 import com.mycompany.myapp.repository.MxpmsSearchEquipmentRepository;
+import com.mycompany.myapp.service.MxpmsSearchEquipmentService;
 import com.mycompany.myapp.service.dto.MxpmsSearchEquipmentDTO;
 import com.mycompany.myapp.service.mapper.MxpmsSearchEquipmentMapper;
 import com.mycompany.myapp.web.rest.errors.ExceptionTranslator;
@@ -89,6 +90,9 @@ public class MxpmsSearchEquipmentResourceIntTest {
     private MxpmsSearchEquipmentMapper mxpmsSearchEquipmentMapper;
 
     @Autowired
+    private MxpmsSearchEquipmentService mxpmsSearchEquipmentService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -107,7 +111,7 @@ public class MxpmsSearchEquipmentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MxpmsSearchEquipmentResource mxpmsSearchEquipmentResource = new MxpmsSearchEquipmentResource(mxpmsSearchEquipmentRepository, mxpmsSearchEquipmentMapper);
+        final MxpmsSearchEquipmentResource mxpmsSearchEquipmentResource = new MxpmsSearchEquipmentResource(mxpmsSearchEquipmentService);
         this.restMxpmsSearchEquipmentMockMvc = MockMvcBuilders.standaloneSetup(mxpmsSearchEquipmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

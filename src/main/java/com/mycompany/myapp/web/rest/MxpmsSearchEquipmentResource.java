@@ -1,14 +1,11 @@
 package com.mycompany.myapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.mycompany.myapp.domain.MxpmsSearchEquipment;
-
-import com.mycompany.myapp.repository.MxpmsSearchEquipmentRepository;
+import com.mycompany.myapp.service.MxpmsSearchEquipmentService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import com.mycompany.myapp.web.rest.util.HeaderUtil;
 import com.mycompany.myapp.web.rest.util.PaginationUtil;
 import com.mycompany.myapp.service.dto.MxpmsSearchEquipmentDTO;
-import com.mycompany.myapp.service.mapper.MxpmsSearchEquipmentMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +33,10 @@ public class MxpmsSearchEquipmentResource {
 
     private static final String ENTITY_NAME = "mxpmsSearchEquipment";
 
-    private final MxpmsSearchEquipmentRepository mxpmsSearchEquipmentRepository;
+    private final MxpmsSearchEquipmentService mxpmsSearchEquipmentService;
 
-    private final MxpmsSearchEquipmentMapper mxpmsSearchEquipmentMapper;
-
-    public MxpmsSearchEquipmentResource(MxpmsSearchEquipmentRepository mxpmsSearchEquipmentRepository, MxpmsSearchEquipmentMapper mxpmsSearchEquipmentMapper) {
-        this.mxpmsSearchEquipmentRepository = mxpmsSearchEquipmentRepository;
-        this.mxpmsSearchEquipmentMapper = mxpmsSearchEquipmentMapper;
+    public MxpmsSearchEquipmentResource(MxpmsSearchEquipmentService mxpmsSearchEquipmentService) {
+        this.mxpmsSearchEquipmentService = mxpmsSearchEquipmentService;
     }
 
     /**
@@ -59,9 +53,7 @@ public class MxpmsSearchEquipmentResource {
         if (mxpmsSearchEquipmentDTO.getId() != null) {
             throw new BadRequestAlertException("A new mxpmsSearchEquipment cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        MxpmsSearchEquipment mxpmsSearchEquipment = mxpmsSearchEquipmentMapper.toEntity(mxpmsSearchEquipmentDTO);
-        mxpmsSearchEquipment = mxpmsSearchEquipmentRepository.save(mxpmsSearchEquipment);
-        MxpmsSearchEquipmentDTO result = mxpmsSearchEquipmentMapper.toDto(mxpmsSearchEquipment);
+        MxpmsSearchEquipmentDTO result = mxpmsSearchEquipmentService.save(mxpmsSearchEquipmentDTO);
         return ResponseEntity.created(new URI("/api/mxpms-search-equipments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -83,9 +75,7 @@ public class MxpmsSearchEquipmentResource {
         if (mxpmsSearchEquipmentDTO.getId() == null) {
             return createMxpmsSearchEquipment(mxpmsSearchEquipmentDTO);
         }
-        MxpmsSearchEquipment mxpmsSearchEquipment = mxpmsSearchEquipmentMapper.toEntity(mxpmsSearchEquipmentDTO);
-        mxpmsSearchEquipment = mxpmsSearchEquipmentRepository.save(mxpmsSearchEquipment);
-        MxpmsSearchEquipmentDTO result = mxpmsSearchEquipmentMapper.toDto(mxpmsSearchEquipment);
+        MxpmsSearchEquipmentDTO result = mxpmsSearchEquipmentService.save(mxpmsSearchEquipmentDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, mxpmsSearchEquipmentDTO.getId().toString()))
             .body(result);
@@ -101,9 +91,9 @@ public class MxpmsSearchEquipmentResource {
     @Timed
     public ResponseEntity<List<MxpmsSearchEquipmentDTO>> getAllMxpmsSearchEquipments(Pageable pageable) {
         log.debug("REST request to get a page of MxpmsSearchEquipments");
-        Page<MxpmsSearchEquipment> page = mxpmsSearchEquipmentRepository.findAll(pageable);
+        Page<MxpmsSearchEquipmentDTO> page = mxpmsSearchEquipmentService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/mxpms-search-equipments");
-        return new ResponseEntity<>(mxpmsSearchEquipmentMapper.toDto(page.getContent()), headers, HttpStatus.OK);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -116,8 +106,7 @@ public class MxpmsSearchEquipmentResource {
     @Timed
     public ResponseEntity<MxpmsSearchEquipmentDTO> getMxpmsSearchEquipment(@PathVariable Long id) {
         log.debug("REST request to get MxpmsSearchEquipment : {}", id);
-        MxpmsSearchEquipment mxpmsSearchEquipment = mxpmsSearchEquipmentRepository.findOne(id);
-        MxpmsSearchEquipmentDTO mxpmsSearchEquipmentDTO = mxpmsSearchEquipmentMapper.toDto(mxpmsSearchEquipment);
+        MxpmsSearchEquipmentDTO mxpmsSearchEquipmentDTO = mxpmsSearchEquipmentService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(mxpmsSearchEquipmentDTO));
     }
 
@@ -131,7 +120,7 @@ public class MxpmsSearchEquipmentResource {
     @Timed
     public ResponseEntity<Void> deleteMxpmsSearchEquipment(@PathVariable Long id) {
         log.debug("REST request to delete MxpmsSearchEquipment : {}", id);
-        mxpmsSearchEquipmentRepository.delete(id);
+        mxpmsSearchEquipmentService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
