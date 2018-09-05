@@ -10,6 +10,10 @@ import { JhoraEmployeeMySuffixModule } from './employee-my-suffix/employee-my-su
 import { JhoraJobMySuffixModule } from './job-my-suffix/job-my-suffix.module';
 import { JhoraJobHistoryMySuffixModule } from './job-history-my-suffix/job-history-my-suffix.module';
 import { JhoraTBdatafileMySuffixModule } from './t-bdatafile-my-suffix/t-bdatafile-my-suffix.module';
+import { JhoraTbDatafileentMySuffixModule } from './tb-datafileent-my-suffix/tb-datafileent-my-suffix.module';
+import { JhoraTbDMySuffixModule } from './tb-d-my-suffix/tb-d-my-suffix.module';
+import { JhoraTbEMySuffixModule } from './tb-e-my-suffix/tb-e-my-suffix.module';
+import { JhoraMxpmsSearchEquipmentMySuffixModule } from './mxpms-search-equipment-my-suffix/mxpms-search-equipment-my-suffix.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -24,6 +28,10 @@ import { JhoraTBdatafileMySuffixModule } from './t-bdatafile-my-suffix/t-bdatafi
         JhoraJobMySuffixModule,
         JhoraJobHistoryMySuffixModule,
         JhoraTBdatafileMySuffixModule,
+        JhoraTbDatafileentMySuffixModule,
+        JhoraTbDMySuffixModule,
+        JhoraTbEMySuffixModule,
+        JhoraMxpmsSearchEquipmentMySuffixModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

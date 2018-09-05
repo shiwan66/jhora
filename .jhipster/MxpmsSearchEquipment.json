@@ -1,0 +1,71 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "objId",
+            "javadoc": "The firstname attribute.",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "pid",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "haschildren",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imgurl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "treeid",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "exvalue",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nodemodel",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "itemtype",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "orderid",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nodewhbz",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nodeyxzt",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "orgid",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "bzname",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180905124233",
+    "javadoc": "The equipemnt entity.",
+    "entityTableName": "mxpms_search_equipment",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "angularJSSuffix": "mySuffix"
+}

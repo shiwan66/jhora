@@ -1,0 +1,78 @@
+
+<div *ngIf="mxpmsSearchEquipment">
+    <h2><span>Mxpms Search Equipment</span> {{mxpmsSearchEquipment.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span ngbTooltip="The firstname attribute.">Obj Id</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.objId}}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.name}}</span>
+        </dd>
+        <dt><span>Pid</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.pid}}</span>
+        </dd>
+        <dt><span>Haschildren</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.haschildren}}</span>
+        </dd>
+        <dt><span>Imgurl</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.imgurl}}</span>
+        </dd>
+        <dt><span>Treeid</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.treeid}}</span>
+        </dd>
+        <dt><span>Exvalue</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.exvalue}}</span>
+        </dd>
+        <dt><span>Nodemodel</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.nodemodel}}</span>
+        </dd>
+        <dt><span>Itemtype</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.itemtype}}</span>
+        </dd>
+        <dt><span>Orderid</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.orderid}}</span>
+        </dd>
+        <dt><span>Nodewhbz</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.nodewhbz}}</span>
+        </dd>
+        <dt><span>Nodeyxzt</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.nodeyxzt}}</span>
+        </dd>
+        <dt><span>Orgid</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.orgid}}</span>
+        </dd>
+        <dt><span>Bzname</span></dt>
+        <dd>
+            <span>{{mxpmsSearchEquipment.bzname}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'mxpms-search-equipment-my-suffix/'+ mxpmsSearchEquipment.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

@@ -55,6 +55,10 @@ public class CacheConfiguration {
             cm.createCache(com.mycompany.myapp.domain.Job.class.getName() + ".tasks", jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.JobHistory.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.TBdatafile.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.TbDatafileent.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.TbD.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.TbE.class.getName(), jcacheConfiguration);
+            cm.createCache(com.mycompany.myapp.domain.MxpmsSearchEquipment.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,0 +1,32 @@
+/**
+ * The equipemnt entity.
+ */
+entity MxpmsSearchEquipment {
+	/**
+	* The firstname attribute.
+	*/
+	objId String,
+	name String,
+	pid String,
+	id String,
+	haschildren String,
+	imgurl String,
+	treeid String,
+	exvalue String,
+	nodemodel String,
+	itemtype String,
+	orderid String,
+	nodewhbz String,
+	nodeyxzt String,
+	orgid String,
+	bzname String,
+}
+// Set pagination options
+paginate MxpmsSearchEquipment with infinite-scroll
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except MxpmsSearchEquipment
+// Set an angular suffix
+angularSuffix * with mySuffix

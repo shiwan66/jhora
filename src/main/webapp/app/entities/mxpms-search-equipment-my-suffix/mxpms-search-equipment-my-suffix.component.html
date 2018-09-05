@@ -1,0 +1,84 @@
+<div>
+    <h2>
+        <span>Mxpms Search Equipments</span>
+        <button class="btn btn-primary float-right jh-create-entity create-mxpms-search-equipment-my-suffix" [routerLink]="['/', { outlets: { popup: ['mxpms-search-equipment-my-suffix-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span >
+            Create new Mxpms Search Equipment
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="mxpmsSearchEquipments">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="objId"><span>Obj Id</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="name"><span>Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="pid"><span>Pid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="haschildren"><span>Haschildren</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="imgurl"><span>Imgurl</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="treeid"><span>Treeid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="exvalue"><span>Exvalue</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nodemodel"><span>Nodemodel</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="itemtype"><span>Itemtype</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="orderid"><span>Orderid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nodewhbz"><span>Nodewhbz</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nodeyxzt"><span>Nodeyxzt</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="orgid"><span>Orgid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="bzname"><span>Bzname</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let mxpmsSearchEquipment of mxpmsSearchEquipments ;trackBy: trackId">
+                <td><a [routerLink]="['../mxpms-search-equipment-my-suffix', mxpmsSearchEquipment.id ]">{{mxpmsSearchEquipment.id}}</a></td>
+                <td>{{mxpmsSearchEquipment.objId}}</td>
+                <td>{{mxpmsSearchEquipment.name}}</td>
+                <td>{{mxpmsSearchEquipment.pid}}</td>
+                <td>{{mxpmsSearchEquipment.haschildren}}</td>
+                <td>{{mxpmsSearchEquipment.imgurl}}</td>
+                <td>{{mxpmsSearchEquipment.treeid}}</td>
+                <td>{{mxpmsSearchEquipment.exvalue}}</td>
+                <td>{{mxpmsSearchEquipment.nodemodel}}</td>
+                <td>{{mxpmsSearchEquipment.itemtype}}</td>
+                <td>{{mxpmsSearchEquipment.orderid}}</td>
+                <td>{{mxpmsSearchEquipment.nodewhbz}}</td>
+                <td>{{mxpmsSearchEquipment.nodeyxzt}}</td>
+                <td>{{mxpmsSearchEquipment.orgid}}</td>
+                <td>{{mxpmsSearchEquipment.bzname}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../mxpms-search-equipment-my-suffix', mxpmsSearchEquipment.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'mxpms-search-equipment-my-suffix/'+ mxpmsSearchEquipment.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'mxpms-search-equipment-my-suffix/'+ mxpmsSearchEquipment.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
