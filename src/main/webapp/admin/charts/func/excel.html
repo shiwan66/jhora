@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/icon.css">
+    <script type="text/javascript" src="../js/jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/hansontable/handsontable.min.js"></script>
+    <script src="../js/echarts.min.js"></script>
+    <link rel="stylesheet" media="screen" href="../js/hansontable/handsontable.min.css">
+    <script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+
+<div id="hot"></div>
+
+<script type="text/javascript">
+
+    var arrData = [
+            ["", "", "掩模制造一览表","","","", "","", "","","","","","","","","",""],
+            ["客户名称", "合肥芯硕半导体有限公司","","", "掩模名称","标定板","","", "", "数据格式","gdsII","联系人","王本详","","","电话","13514989654",""],
+            ["基板材料", "石英","","普通","材料规格", "7015","","", "光刻机型","","","主掩模方向(Cr up)","","","□F","","保护膜","无"],
+            ["数据比例", "1:1","","掩模类别","1:1","","阵列步距", "X:","","阵列数", "X:","","套版顺序","","","","基准掩模",""],
+            ["", "","","","", "","","Y:", "","","Y:","","","","","","",""],
+            ["主芯片", "文件名", "ATD标定板图形7.gds","","","", "插入图形（1）","", "插入图形（2）","","CD测试图形","","","缺陷","","套准精度","备注"],
+            ["", "Topcell", "all","","","", "","", "","","","","",""],
+            ["层号", "打印版号","", "数据区黑白", "设计CD", "涨缩(/边)","版号","","版号","","黑/白","目标尺寸","公差","大小","密度"],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["说明", "图形放置要求", "数据中心点放置在掩模版中心（默认）","","","", "插入图形位置示意图：","", "","","测试图形形状：","","","","","业务员签名字:  日期:","",""],
+            ["", "", "数据原点放置在掩模版中心","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["", "", "","","","", "","", "","","","","",""],
+            ["注：保护膜栏请填写保护膜的数量，如单、双或无", "", "","","","", "","", "","","","","","","","第一页（共一页）","",""],
+        ];
+
+        getMaskData(arrData);
+//        hot = new Handsontable(container, {
+//            data: arrData,
+//            rowHeaders: true,
+//            colHeaders: true,
+//            contextMenu: true,
+//            mergeCells: [
+//                {row: 1, col: 1, rowspan: 1, colspan: 3},
+//                {row: 1, col: 5, rowspan: 1, colspan: 4},
+//                {row: 1, col: 12, rowspan: 1, colspan: 3},
+//                {row: 1, col: 16, rowspan: 1, colspan: 2},
+//                {row: 2, col: 1, rowspan: 1, colspan: 2},
+//                {row: 2, col: 5, rowspan: 1, colspan: 3},
+//                {row: 2, col: 9, rowspan: 1, colspan: 2},
+//                {row: 2, col: 11, rowspan: 1, colspan: 3},
+//                {row: 3, col: 0, rowspan: 2, colspan: 1},
+//                {row: 3, col: 1, rowspan: 2, colspan: 2},
+//                {row: 3, col: 1, rowspan: 2, colspan: 2},
+//                {row: 3, col: 3, rowspan: 2, colspan: 1},
+//                {row: 3, col: 4, rowspan: 2, colspan: 2},
+//                {row: 3, col: 6, rowspan: 2, colspan: 1},
+//                {row: 3, col: 9, rowspan: 2, colspan: 1},
+//                {row: 3, col: 12, rowspan: 2, colspan: 1},
+//                {row: 3, col: 13, rowspan: 2, colspan: 3},
+//                {row: 3, col: 16, rowspan: 2, colspan: 1},
+//                {row: 3, col: 17, rowspan: 2, colspan: 1},
+//                {row: 5, col: 0, rowspan: 2, colspan: 1},
+//                {row: 5, col: 2, rowspan: 1, colspan: 4},
+//                {row: 5, col: 6, rowspan: 2, colspan: 2},
+//                {row: 5, col: 8, rowspan: 2, colspan: 2},
+//                {row: 5, col: 10, rowspan: 2, colspan: 3},
+//                {row: 5, col: 13, rowspan: 2, colspan: 2},
+//                {row: 5, col: 15, rowspan: 3, colspan: 1},
+//                {row: 5, col: 16, rowspan: 3, colspan: 2},
+//                {row: 6, col: 2, rowspan: 1, colspan: 4},
+//                {row: 7, col: 1, rowspan: 1, colspan: 2},
+//                {row: 7, col: 6, rowspan: 1, colspan: 2},
+//                {row: 7, col: 8, rowspan: 1, colspan: 2},
+//                {row: 22, col: 0, rowspan: 5, colspan: 1},
+//                {row: 22, col: 2, rowspan: 1, colspan: 4},
+//                {row: 22, col: 6, rowspan: 5, colspan: 4},
+//                {row: 22, col: 10, rowspan: 5, colspan: 5},
+//                {row: 22, col: 15, rowspan: 5, colspan: 3},
+//                {row: 27, col: 0, rowspan: 1, colspan: 7},
+//                {row: 27, col: 15, rowspan: 5, colspan: 3},
+//            ]
+//        });
+//    }
+
+    /**
+     * 获取掩模列表
+     */
+    function getMaskData(arrData){
+        var access_token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTUzMzAzMDcwNn0.5GKveJiOsekTlcvLkeYzecU-G8iBFIs3JiDCApLAD5730wU1mZNOo1nkSkUJkzKCxiw9m_CSjuCwKx_0oTlxyg";
+        var url = "../../../api/masks?page=0&size=20";
+        $.ajax({
+            type:"get",
+            url: url,
+            headers: {
+                'Authorization':'Bearer '+access_token,
+                'Content-Type':'text/plain'
+            },
+            crossDomain:true,
+            async:false,
+            dataType:"json",
+//            data:JSON.stringify(query),
+            success:function(data){
+                console.log("data="+data.length);
+                if(data.error){
+                    if(data.error.reason!= undefined) {
+                        alert("数据不存在:"+data.error.reason)
+                    }
+                }else {
+                    if(data.length>0){
+                        for(var i =0;i<data.length;i++){
+                            var row = data[i]
+                            arrData.splice((8+i),1,[row.ch, row.dybh,"", row.sjqhb,(row.sjCD+"um"), row.zs,row.crtxbh1,"",row.crtxbh2,"",row.cdcstxwhiteblack,row.cdcstxmbcc,(row.cdcstxgc+"nm"),row.qxdx,"",(row.tzjd+"nm"),row.remark]);
+                        }
+                    }
+                    $("#hot").empty();
+                    var
+                        $$ = function(id) {
+                            return document.getElementById(id);
+                        },
+                        container = $$('hot');
+
+                    hot = new Handsontable(container, {
+                        data: arrData,
+                        rowHeaders: true,
+                        colHeaders: true,
+                        contextMenu: true,
+                        mergeCells: [
+                            {row: 1, col: 1, rowspan: 1, colspan: 3},
+                            {row: 1, col: 5, rowspan: 1, colspan: 4},
+                            {row: 1, col: 12, rowspan: 1, colspan: 3},
+                            {row: 1, col: 16, rowspan: 1, colspan: 2},
+                            {row: 2, col: 1, rowspan: 1, colspan: 2},
+                            {row: 2, col: 5, rowspan: 1, colspan: 3},
+                            {row: 2, col: 9, rowspan: 1, colspan: 2},
+                            {row: 2, col: 11, rowspan: 1, colspan: 3},
+                            {row: 3, col: 0, rowspan: 2, colspan: 1},
+                            {row: 3, col: 1, rowspan: 2, colspan: 2},
+                            {row: 3, col: 1, rowspan: 2, colspan: 2},
+                            {row: 3, col: 3, rowspan: 2, colspan: 1},
+                            {row: 3, col: 4, rowspan: 2, colspan: 2},
+                            {row: 3, col: 6, rowspan: 2, colspan: 1},
+                            {row: 3, col: 9, rowspan: 2, colspan: 1},
+                            {row: 3, col: 12, rowspan: 2, colspan: 1},
+                            {row: 3, col: 13, rowspan: 2, colspan: 3},
+                            {row: 3, col: 16, rowspan: 2, colspan: 1},
+                            {row: 3, col: 17, rowspan: 2, colspan: 1},
+                            {row: 5, col: 0, rowspan: 2, colspan: 1},
+                            {row: 5, col: 2, rowspan: 1, colspan: 4},
+                            {row: 5, col: 6, rowspan: 2, colspan: 2},
+                            {row: 5, col: 8, rowspan: 2, colspan: 2},
+                            {row: 5, col: 10, rowspan: 2, colspan: 3},
+                            {row: 5, col: 13, rowspan: 2, colspan: 2},
+                            {row: 5, col: 15, rowspan: 3, colspan: 1},
+                            {row: 5, col: 16, rowspan: 3, colspan: 2},
+                            {row: 6, col: 2, rowspan: 1, colspan: 4},
+                            {row: 7, col: 1, rowspan: 1, colspan: 2},
+                            {row: 7, col: 6, rowspan: 1, colspan: 2},
+                            {row: 7, col: 8, rowspan: 1, colspan: 2},
+                            {row: 8, col: 1, rowspan: 1, colspan: 2},
+                            {row: 8, col: 6, rowspan: 1, colspan: 2},
+                            {row: 8, col: 8, rowspan: 1, colspan: 2},
+                            {row: 22, col: 0, rowspan: 5, colspan: 1},
+                            {row: 22, col: 2, rowspan: 1, colspan: 4},
+                            {row: 22, col: 6, rowspan: 5, colspan: 4},
+                            {row: 22, col: 10, rowspan: 5, colspan: 5},
+                            {row: 22, col: 15, rowspan: 5, colspan: 3},
+                            {row: 27, col: 0, rowspan: 1, colspan: 7},
+                            {row: 27, col: 15, rowspan: 5, colspan: 3},
+                        ]
+                    });
+
+                }
+            },
+            error:function(){
+                alert("error 服务器返回失败");
+            }
+        })
+    }
+
+</script>
+</body>
+</html>

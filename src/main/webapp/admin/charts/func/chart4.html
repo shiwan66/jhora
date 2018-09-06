@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 引入 ECharts 文件 -->
+    <script type="text/javascript" src="../js/jquery/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="../js/hansontable/handsontable.min.js"></script>
+    <script src="../js/echarts.min.js"></script>
+    <link rel="stylesheet" media="screen" href="../js/hansontable/handsontable.min.css">
+</head>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <!--<div id="main" style="width: 800px;height:600px;"></div>-->
+    <div id="hot"></div>
+
+<script type="text/javascript">
+
+/**
+ * 高亮查询条件封装
+ */
+function getAPISearchCondition(name) {
+    query ="";
+//    var name = $("#inputAPIValue").val();
+    console.log("name="+name);
+    query = JSON.parse('{"query":{"match_phrase":{"message":"'+name+'"}}}');
+    console.log("query="+query);
+}
+
+
+/**
+ * API Search
+ * @constructor
+ */
+var a = new Array();
+// 在构造前初始化列
+a[0] =['时间', '时间', '消息', '方法', '耗时(毫秒)'];
+
+function APISearch(){
+    var access_token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTUxNzU1ODQ5M30.ImIdKGyMic3FVm-KIhkt4PTqkgC9r8gb26hP8PqJsZvP6Uf86mDAWMLG_MxbR5JyUsyVSyN91HH0mhKfEkwdyQ";
+    var url = '../../../api/monV4/searchIndex';
+    $.ajax({
+        type:"post",
+        url: url,
+        headers: {
+            'Authorization':'Bearer '+access_token,
+            'Content-Type':'text/plain'
+        },
+        crossDomain:true,
+        async:false,
+        dataType:"json",
+        data:JSON.stringify(query),
+        success:function(data){
+            var hits = data.hits;
+            if(hits.hits.length){
+                for(var i=0;i<hits.hits.length;i++){
+                    console.log("monV4 查询到的日志="+hits.hits[i]._source.message);
+                }
+                for(var i=0;i<hits.hits.length;i++){
+                    var message = hits.hits[i]._source.message;
+                    console.log("message="+message);
+                    var messageTime = message.substring(1,24);
+                    var indexOfLog = message.indexOf('-',40);
+                    var indexOfLog2 = indexOfLog + 2;
+                    var text = message.substring((indexOfLog + 2),100);
+                    var indexOfCostTime = text.indexOf("：");
+                    var costTime = text.substring((indexOfCostTime+1),24);
+
+                    console.log("indexOfCostTime="+indexOfCostTime+";costTime="+costTime);
+                    console.log("messageTime="+messageTime+";indexOfLog="+indexOfLog+";text="+text);
+                    a[i+1]=[messageTime, indexOfLog, text, '方法', costTime]
+                }
+            }else{
+                alert("没有查到对应的数据");
+                $("#outputHighlight").html("")
+            }
+        },
+        error:function(){
+            alert("error");
+        }
+    })
+
+//    url = "http://45.248.86.155:8080/api-0.0.1-SNAPSHOT/api/getUserLoginTime";
+    url = "../../../api/getUserLoginTime?userId=lsd123";
+    query = JSON.parse('{"userId":"12"}');
+    name = "qk";
+
+
+    $.ajax({
+        type:"post",
+        url: url,
+        crossDomain:true,
+        async:false,
+//        dataType:"json",
+        data:JSON.stringify(query),
+        success:function(data){
+            alert("data="+data)
+        },
+        error:function(){
+            alert("error");
+        }
+    })
+
+}
+
+        function getData() {
+            getAPISearchCondition("WfCurtaskPageBizc:1210 - 从数据库中读取审核意见sql执行时间");
+            APISearch();
+            return a;
+        }
+        // Instead of creating a new Handsontable instance with the container element passed as an argument,
+        // you can simply call .handsontable method on a jQuery DOM object.
+        var $container = $("#hot");
+
+        $container.handsontable({
+            data: getData(),
+            startRows: 5,
+            startCols: 5,
+            minRows: 5,
+            minCols: 5,
+            maxRows: 10,
+            maxCols: 10,
+            rowHeaders: true,
+            colHeaders: false,
+            minSpareRows: 1,
+            contextMenu: true
+        });
+
+        // This way, you can access Handsontable api methods by passing their names as an argument, e.g.:
+        var hotInstance = $("#hot").handsontable('getInstance');
+
+</script>
+</body>
+
+
+</html>

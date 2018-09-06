@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/icon.css">
+    <script type="text/javascript" src="../js/jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/hansontable/handsontable.min.js"></script>
+    <script src="../js/echarts.min.js"></script>
+    <link rel="stylesheet" media="screen" href="../js/hansontable/handsontable.min.css">
+    <script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+<div class="easyui-panel" style="padding:5px;width: 100%">
+    <select id="selectServer">
+        <option value ="server1" selected="true">服务器1</option>
+        <option value ="server2">服务器2</option>
+    </select>
+    <a>
+        <input  name="search_date" id="search_date" style="width:20%"  onclick="WdatePicker()" value=2017-12-12>
+    </a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true" id="queryButton">查询</a>
+</div>
+
+<div id="hot"></div>
+
+<script type="text/javascript">
+
+    /**
+     * 高亮查询条件封装
+     */
+    function getAPISearchCondition(name) {
+        var search_date =  $("#search_date").val();
+        query = JSON.parse('{"search_date":"'+search_date+'","query_condition":{"query":{"match_phrase":{"message":"'+name+'"}},"from" : 0, "size" : 100}}');
+        console.log("query="+query);
+    }
+
+    /**
+     * API Search
+     * @constructor
+     */
+    var a = new Array(10000);
+    // 在构造前初始化列
+    a[0] =['服务器', '时间', '消息', '方法', '耗时(毫秒)'];
+
+    function APISearch(){
+        var access_token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTUxNzU1ODQ5M30.ImIdKGyMic3FVm-KIhkt4PTqkgC9r8gb26hP8PqJsZvP6Uf86mDAWMLG_MxbR5JyUsyVSyN91HH0mhKfEkwdyQ";
+        var url = '../../../api/monV6/searchIndex';
+        $.ajax({
+            type:"post",
+            url: url,
+            headers: {
+                'Authorization':'Bearer '+access_token,
+                'Content-Type':'text/plain'
+            },
+            crossDomain:true,
+            async:false,
+            dataType:"json",
+            data:JSON.stringify(query),
+            success:function(data){
+                console.log("data="+data);
+                if(data.error){
+                    if(data.error.reason!= undefined) {
+                        alert("索引数据不存在:"+data.error.reason)
+                    }
+                }else {
+                    hot.loadData(data.data);
+                }
+            },
+            error:function(){
+                alert("error 服务器返回失败");
+            }
+        })
+    }
+
+    function getData() {
+        getAPISearchCondition("WfCurtaskPageBizc:1210 - 从数据库中读取审核意见sql执行时间");
+        APISearch();
+//        return a;
+    }
+
+    function loadTable() {
+        $("#hot").empty();
+        var
+            $$ = function(id) {
+                return document.getElementById(id);
+            },
+            container = $$('hot');
+
+        hot = new Handsontable(container, {
+            startRows: 8,
+            startCols: 6,
+            rowHeaders: true,
+            colHeaders: false,
+            colHeaders: ["服务器", "时间", "方法","消息","耗时(毫秒)"],
+        });
+        getData();
+    }
+
+    $("#queryButton").click(function(){
+        loadTable();
+    });
+
+    loadTable();
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PMS2.0 性能监控</title>
+    <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.5.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.5.3/themes/icon.css">
+    <link rel="stylesheet" href="ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="js/jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="ztree/js/jquery.ztree.core.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">PMS2.0监控平台</div>
+<div data-options="region:'west',split:true,title:'菜单'" style="width:220px;padding:10px;">
+    <ul id="tree" class="ztree" style="width:260px; overflow:auto;"></ul>
+</div>
+<div data-options="region:'center',title:'日志列表'">
+    <IFRAME ID="testIframe" Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100%  height="800px" SRC="func/excel.html" onload="setIframeHeight(this)"></IFRAME>
+</div>
+<SCRIPT type="text/javascript" >
+    <!--
+    var zTree;
+    var demoIframe;
+
+    var setting = {
+        view: {
+            dblClickExpand: false,
+            showLine: true,
+            selectedMulti: false
+        },
+        data: {
+            simpleData: {
+                enable:true,
+                idKey: "id",
+                pIdKey: "pId",
+                rootPId: ""
+            }
+        },
+        callback: {
+            beforeClick: function(treeId, treeNode) {
+                var zTree = $.fn.zTree.getZTreeObj("tree");
+                if (treeNode.isParent) {
+                    zTree.expandNode(treeNode);
+                    return false;
+                } else {
+                    demoIframe.attr("src",treeNode.file + ".html");
+                    return true;
+                }
+            }
+        }
+    };
+
+    var zNodes =[
+        {id:1, pId:0, name:"PMS2.0功能监控", open:true},
+        {id:101, pId:1, name:"1、周计划需求编制", file:"func/chart1"},
+        {id:102, pId:1, name:"2、工作任务单编制及派发", file:"func/chart2"},
+        {id:103, pId:1, name:"3、执行bpm接口方法queryWorkItemsByActivityInstID", file:"func/chart3"},
+        {id:104, pId:1, name:"4、周检修计划", file:"func/chart4"},
+        {id:105, pId:1, name:"5、getSliceUserSelNodes 方法总共使用时间", file:"func/chart5"},
+        {id:106, pId:1, name:"6、从数据库中读取审核意见sql执行时间", file:"func/chart6"},
+        {id:107, pId:1, name:"7、异步加载模式下全部展开", file:"func/asyncForAll"},
+        {id:108, pId:1, name:"8、autocomplete", file:"func/autocomplete"},
+        {id:109, pId:1, name:"9、mockjax1", file:"func/mockjax"},
+        {id:110, pId:1, name:"10、qunit", file:"func/qunit"},
+        {id:111, pId:1, name:"11、excel快速原型", file:"func/excel"},
+        {id:112, pId:1, name:"12、上传文件", file:"func/upload"}
+    ];
+
+    $(document).ready(function(){
+        var t = $("#tree");
+        t = $.fn.zTree.init(t, setting, zNodes);
+        demoIframe = $("#testIframe");
+        demoIframe.bind("load", loadReady);
+        var zTree = $.fn.zTree.getZTreeObj("tree");
+        zTree.selectNode(zTree.getNodeByParam("id", 111));
+
+    });
+
+    function loadReady() {
+        var bodyH = demoIframe.contents().find("body").get(0).scrollHeight,
+            htmlH = demoIframe.contents().find("html").get(0).scrollHeight,
+            maxH = Math.max(bodyH, htmlH), minH = Math.min(bodyH, htmlH),
+            h = demoIframe.height() >= maxH ? minH:maxH ;
+//        if (h < 530) h = 530;
+//        demoIframe.height(h);
+    }
+
+
+    function setIframeHeight(iframe) {
+                if (iframe) {
+                    var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                    if (iframeWin.document.body) {
+                        iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+                    }
+
+                    var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+                    if (iframeWin.document.body) {
+                        iframe.width = iframeWin.document.documentElement.scrollWidth || iframeWin.document.body.scrollWidth;
+                    }
+
+                }
+            };
+
+    window.onload = function () {
+        setIframeHeight(document.getElementById('testIframe'));
+    };
+
+
+    //-->
+</SCRIPT>
+
+</body>
+</html>

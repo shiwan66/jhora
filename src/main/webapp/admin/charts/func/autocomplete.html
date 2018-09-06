@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - async for All</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="../js/jquery/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="../js/jquery/jquery.autocomplete.min.js"></script>
+	<!--<script type="text/javascript" src="../../../js/jquery.ztree.excheck.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.exedit.js"></script>-->
+	<SCRIPT type="text/javascript">
+		<!--
+		$(document).ready(function(){
+            var countries = [
+                { value: 'Andorra', data: 'AD' },
+                { value: 'Zimbabwe', data: 'ZZ' }
+            ];
+
+            $('#autocomplete').autocomplete({
+                lookup: countries,
+                onSelect: function (suggestion) {
+                    alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                }
+            });
+        });
+		//-->
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>autocomplete</h1>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+        <input type="text" name="country" id="autocomplete"/>
+
+	</div>
+
+</div>
+</BODY>
+</HTML>

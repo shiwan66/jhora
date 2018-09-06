@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/icon.css">
+    <script type="text/javascript" src="../js/jquery-easyui-1.5.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../js/hansontable/handsontable.min.js"></script>
+    <script src="../js/echarts.min.js"></script>
+    <link rel="stylesheet" media="screen" href="../js/hansontable/handsontable.min.css">
+    <script language="javascript" type="text/javascript" src="../js/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+
+<div class="easyui-panel" style="padding:5px;width: 100%">
+    <select id="selectServer">
+        <option value ="server1" selected="true">服务器1</option>
+        <option value ="server2">服务器2</option>
+    </select>
+    <a>
+        <input  name="search_date" id="search_date" style="width:20%"  onclick="WdatePicker()" value=2017-12-05>
+    </a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true" id="queryButton">查询</a>
+</div>
+
+<div id="hot"></div>
+
+<script type="text/javascript">
+
+    /**
+     * 高亮查询条件封装
+     */
+    function getAPISearchCondition(name) {
+        var search_date =  $("#search_date").val();
+        query = JSON.parse('{"search_date":"'+search_date+'","query_condition":{"query":{"match_phrase":{"message":"'+name+'"}},"from" : 0, "size" : 1000}}');
+        console.log("query="+query);
+    }
+
+    /**
+     * API Search
+     * @constructor
+     */
+    var a = new Array(10000);
+    // 在构造前初始化列
+    a[0] =['服务器', '时间', '消息', '方法', '耗时(毫秒)'];
+
+    function APISearch(){
+        var access_token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTUxNzU1ODQ5M30.ImIdKGyMic3FVm-KIhkt4PTqkgC9r8gb26hP8PqJsZvP6Uf86mDAWMLG_MxbR5JyUsyVSyN91HH0mhKfEkwdyQ";
+        var url = '../../../api/monV5/searchIndex';
+        $.ajax({
+            type:"post",
+            url: url,
+            headers: {
+                'Authorization':'Bearer '+access_token,
+                'Content-Type':'text/plain'
+            },
+            crossDomain:true,
+            async:false,
+            dataType:"json",
+            data:JSON.stringify(query),
+            success:function(data){
+                if(data.hits!= undefined) {
+                    var hits = data.hits;
+                    var hitsLength = hits.hits.length;
+                    var serverName = $("#selectServer").find("option:selected").text();
+                    if(hits.hits.length){
+                        for(var i=0;i<hits.hits.length;i++){
+                            var message = hits.hits[i]._source.message;
+                            var messageTime = message.substring(1,24);
+                            var indexOfLog = message.indexOf('-',40);
+                            var indexOfLog2 = indexOfLog + 2;
+                            var text = message.substring((indexOfLog + 2),100);
+                            var arrMessage = message.split(":");
+                            var mehtod1 = arrMessage[4].split("-")[0];
+                            var method = arrMessage[3]+":"+mehtod1;
+                            var indexOfCostTime = text.indexOf("：");
+                            var lastIndexOfCostTime = message.lastIndexOf(":");
+                            var costTime = message.substring((lastIndexOfCostTime+2),message.length);
+                            a[i+1]=[serverName, messageTime, text, method, costTime];
+                        }
+                    }else{
+                        alert("没有查到对应的数据");
+                    }
+                }
+                if(data.error!= undefined){
+                    if(data.error.reason!= undefined) {
+                        alert("索引数据不存在:"+data.error.reason)
+                    }
+                }
+            },
+            error:function(){
+                alert("error 服务器返回失败");
+            }
+        })
+    }
+
+    function getData() {
+        getAPISearchCondition("执行bpm接口方法queryWorkItemsByActivityInstID");
+        APISearch();
+        return a;
+    }
+
+    function loadTable() {
+        var $container = $("#hot");
+
+        $container.handsontable({
+            data: getData(),
+            startRows: 5,
+            startCols: 5,
+            minRows: 5,
+            minCols: 5,
+            maxRows: 1000,
+            maxCols: 10,
+            rowHeaders: true,
+            colHeaders: false,
+            minSpareRows: 1,
+            contextMenu: true
+        });
+        var hotInstance = $("#hot").handsontable('getInstance');
+    }
+
+    $("#queryButton").click(function(){
+        loadTable();
+    });
+    loadTable();
+</script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="description" content="mockjax demo" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src=" http://cdnjs.cloudflare.com/ajax/libs/jquery-mockjax/1.5.3/jquery.mockjax.js"></script>
+    <meta charset="UTF-8">
+    <title>Mojax test</title>
+    <style id="jsbin-css">
+        table td{border-bottom:1px solid #ccc;padding:4px;margin:0}
+    </style>
+</head>
+<body>
+
+<h1> Fake Ajax Request - Data from Var</h1>
+<div id="output_fake_json" class="output">
+</div>
+
+<h1>Fake ajax - proxy to fillText API</h1>
+<table id="records" cellspacing="0"></table>
+
+<!--   Github Page Example -->
+<h1>Github Page Example</h1>
+<div id="fortune"></div>
+
+<script id="jsbin-javascript">
+    var sampledata = {
+        "employees": [{
+            "firstName": "Vikas",
+            "lastName": "Bhagwagar"
+        }, {
+            "firstName": "Gaurav",
+            "lastName": "Patel"
+        }, {
+            "firstName": "Ankur",
+            "lastName": "Shah"
+        }]
+    };
+    //from local data
+    $.mockjax({
+        url: "sampledata.php",
+        contentType: 'text/json',
+        responseTime: 0,
+        dataType: 'json',
+        responseText: sampledata
+//  proxy: 'sample.json',
+    });
+    //from fillText API
+    $.mockjax({
+        url: "filltextdata.php",
+        proxy: 'http://www.filltext.com/?',
+        data:{
+            'rows': 10,
+            'fname': '{firstName}',
+            'lname': '{lastName}',
+            'tel': '{phone|format}',
+        },
+        responseTime: 0,
+        dataType: 'json'
+    });
+    //ajax From Var
+    (function FakeJSONFromVar (){
+        $.ajax({
+            url: "sampledata.php",
+            dataType: 'json'
+
+        }).done(function (json_response) {
+
+            var names = [];
+            for (var i in json_response.employees) {
+                names.push(json_response.employees[i].firstName);
+            }
+            output = names.join("<br/>");
+            $('#output_fake_json').html(output);
+
+            $.mockjaxClear();
+        });
+    })();
+    //ajax from proxy to fillTextAPI
+    (function ProxytofillTextAPI() {
+        $.ajax({
+            url: "filltextdata.php",
+            dataType: 'json'
+        })
+            .done(function( data ) {
+                $.each( data, function( i, item ) {
+                    var html =
+                        "<td>" + item.fname + "</td>" +
+                        "<td>" + item.lname + "</td>" +
+                        "<td>" + item.tel + "</td>";
+                    $("<tr/>").html(html).appendTo("#records");
+                });
+            });
+    })();
+    $.mockjax({
+        url: '/restful/fortune',
+        responseTime: 10,
+        responseText: {
+            status: 'success',
+            fortune: 'Are you a turtle?'
+        }
+    });
+
+    // Github Page Example
+    $.getJSON('/restful/fortune', function(response) {
+        if ( response.status == 'success') {
+            $('#fortune').html( 'Your fortune is: ' + response.fortune );
+        } else {
+            $('#fortune').html( 'Things do not look good, no fortune was told' );
+        }
+    });
+</script>
+
+
+</body>
+
+
+</html>
