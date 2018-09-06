@@ -1,8 +1,8 @@
 package com.mycompany.myapp.service.impl;
 
-import com.mycompany.myapp.service.DBFileService;
 import com.mycompany.myapp.domain.DBFile;
 import com.mycompany.myapp.repository.DBFileRepository;
+import com.mycompany.myapp.service.DBFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

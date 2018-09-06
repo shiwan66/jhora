@@ -1,0 +1,12 @@
+entity DBFile {
+	fileName String,
+    fileType String,
+    data Blob    
+}
+
+paginate DBFile with pagination
+
+// Set service options to all except few
+service all with serviceImpl
+// Set an angular suffix
+angularSuffix * with mySuffix
