@@ -31,7 +31,7 @@ spring:
         username: dwzy
         password: dwzy
     jpa:
-        database-platform: org.hibernate.dialect.Oracle12cDialect
+        database-platform: org.hibernate.dialect.Oracle9Dialect
         database: ORACLE
         show-sql: true
         properties:
