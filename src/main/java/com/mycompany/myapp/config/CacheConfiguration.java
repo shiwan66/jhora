@@ -42,24 +42,7 @@ public class CacheConfiguration {
             cm.createCache(com.mycompany.myapp.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.DBFile.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Region.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Country.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Location.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Department.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Department.class.getName() + ".employees", jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Task.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Task.class.getName() + ".jobs", jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Employee.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Employee.class.getName() + ".jobs", jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Job.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Job.class.getName() + ".tasks", jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.JobHistory.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.TBdatafile.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.TbDatafileent.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.TbD.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.TbE.class.getName(), jcacheConfiguration);
             cm.createCache(com.mycompany.myapp.domain.MxpmsSearchEquipment.class.getName(), jcacheConfiguration);
-            cm.createCache(com.mycompany.myapp.domain.Mask.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
