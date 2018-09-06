@@ -10,7 +10,7 @@ function leftTreefilter(treeId, parentNode, childNodes) {
 var leftTreeSetting = {
     async: {
         enable: true,
-               url:"../../../api/tree/v1/getNodes",
+               url:"../../../api/tree/v1/getNodes?pid=pddkx_zsbyqGroup@SBID00000026ECABF0AED648E18F470B48C0DD4F4D",
         autoParam:["id", "name=n", "level=lv"],
 //                otherParam:{"otherParam":"zTreeAsyncTest"},
         dataFilter: leftTreefilter,

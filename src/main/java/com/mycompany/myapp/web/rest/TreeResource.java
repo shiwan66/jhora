@@ -73,6 +73,7 @@ public class TreeResource {
     @GetMapping("/v1/getNodes")
     @Timed
     public String getNodes(@RequestParam("pid") String pid) {
+        log.info("从数据库中取节点");
         return "[{ id:'01',\tname:'n1',\tisParent:true},{ id:'02',\tname:'n2',\tisParent:false},{ id:'03',\tname:'n3',\tisParent:true},{ id:'04',\tname:'n4',\tisParent:false}]";
     }
 
