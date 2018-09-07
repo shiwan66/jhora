@@ -15,7 +15,7 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "sjCD",
+            "fieldName": "sjcd",
             "fieldType": "String"
         },
         {

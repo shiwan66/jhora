@@ -6,7 +6,7 @@ export class MaskMySuffix implements BaseEntity {
         public ch?: string,
         public dybh?: string,
         public sjqhb?: string,
-        public sjCD?: string,
+        public sjcd?: string,
         public zs?: number,
         public crtxbh1?: string,
         public crtxbh2?: string,
