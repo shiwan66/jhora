@@ -13,6 +13,7 @@ import com.mycompany.myapp.domain.MxpmsSearchEquipment;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -95,14 +96,15 @@ public class TreeResource {
             String url = "http://127.0.0.1:9200/" + index + "/_search";
             JSONObject json = new JSONObject();
             ObjectMapper mapper = new ObjectMapper();
-            HttpPost httpPost = new HttpPost(url);
+//            HttpPost httpPost = new HttpPost(url);
+            HttpGet httpGet = new HttpGet(url);
             String queryTerm = "{\"size\" : 100,\"query\" : {\"bool\" : {\"filter\" : {\"term\" : {\"pid\" : \""+pid+"\"}}}}}";
             log.info("queryTerm="+queryTerm);
             StringEntity stringEntity = new StringEntity(queryTerm);
             stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            httpPost.setEntity(stringEntity);
-            log.info("httpClient="+httpClient+";httpPost="+httpPost);
-            CloseableHttpResponse response = httpClient.execute(httpPost);
+//            httpPost.setEntity(stringEntity);
+            log.info("httpClient="+httpClient+";httpPost="+httpGet);
+            CloseableHttpResponse response = httpClient.execute(httpGet);
             cn.hutool.json.JSONArray array = JSONUtil.createArray();
             try {
                 int statusCode = response.getStatusLine().getStatusCode();
