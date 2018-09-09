@@ -8,6 +8,7 @@
     <script type="text/javascript" src="../js/jquery/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="../js/ztree/js/jquery.ztree.core.js"></script>
     <script type="text/javascript" src="../js/jquery/jquery.autocomplete.min.js"></script>
+    <script type="text/javascript" src="../js/ztree/js/jquery.ztree.excheck.js"></script>
     <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/default/easyui.css">
     <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/icon.css">
     <script type="text/javascript" src="../js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
@@ -24,17 +25,13 @@
         var setting = {
             async: {
                 enable: true,
-//                url:"../../../api/tree/v1/getNodes",
                 url:"../../../api/tree/v1/getESNodes?pid=pddkx_zsbyqGroup@SBID00000026ECABF0AED648E18F470B48C0DD4F4D",
                 autoParam:["id", "name=n", "level=lv"],
-//                otherParam:{"otherParam":"zTreeAsyncTest"},
                 dataFilter: filter,
                 type: "get"
             },
-            callback: {
-                beforeAsync: beforeAsync,
-                onAsyncSuccess: onAsyncSuccess,
-                onAsyncError: onAsyncError
+            check: {
+                enable: true
             }
         };
 

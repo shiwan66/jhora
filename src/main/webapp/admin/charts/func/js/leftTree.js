@@ -15,6 +15,9 @@ var leftTreeSetting = {
 //                otherParam:{"otherParam":"zTreeAsyncTest"},
         dataFilter: leftTreefilter,
         type: "get"
+    },
+    check: {
+        enable: true
     }
     // ,
     // callback: {
