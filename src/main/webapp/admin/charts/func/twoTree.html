@@ -138,11 +138,33 @@
         function syncLeftToRight() {
             var leftzTree = $.fn.zTree.getZTreeObj("leftTree"),
                 leftnodes = leftzTree.getCheckedNodes();
-            console.log("leftnodes="+leftnodes.length);
-            for(var i=0;i<leftnodes.length;i++){
-                console.log("leftnodes="+leftnodes[i].id);
-            }
 
+            var query = "";
+            for(var i=0;i<leftnodes.length;i++){
+
+                query = query +","+ leftnodes[i].id;
+            }
+            var obj = new Object();
+            obj.ids = query;
+            var access_token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTUzODkwNDk1NH0.YRbaDvOicDRLQrABJqWmgtTNP9QkeK_InsoBqbrL5hzBJqSQz5jh_8xD-o_d39am0VFDtgVzqvPPnDBKB89LhQ";
+            var url = '../../../api/tree/v1/syncLeftToRight';
+            $.ajax({
+                type:"post",
+                url: url,
+                headers: {
+                    'Authorization':'Bearer '+access_token,
+                    'Content-Type':'text/plain'
+                },
+                // crossDomain:true,
+                async:false,
+                dataType:"json",
+                data:JSON.stringify(obj),
+                success:function(data){
+                },
+                error:function(){
+                    alert("error 服务器返回失败");
+                }
+            })
         }
 
         function reset() {
@@ -169,8 +191,6 @@
             $("#syncLeftToRight").bind("click", syncLeftToRight);
             $("#asyncAllBtn").bind("click", asyncAll);
             $("#resetBtn").bind("click", reset);
-
-
         });
         //-->
     </SCRIPT>

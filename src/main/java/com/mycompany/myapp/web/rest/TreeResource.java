@@ -101,7 +101,8 @@ public class TreeResource {
         String[] strArray = new String[page.getContent().size()];
         for(int i=0;i<page.getContent().size();i++){
             String tempName = ((MxpmsSearchEquipmentDTO)array[i]).getName();
-            strArray[i] = "{ id:'01',\tname:'"+tempName+"',\tisParent:true}";
+            String id = ((MxpmsSearchEquipmentDTO)array[i]).getId().toString();
+            strArray[i] = "{ id:'"+id+"',\tname:'"+tempName+"',\tisParent:true}";
         }
 //        strTreeNodes = "[{ id:'01',\tname:'n1',\tisParent:true},{ id:'02',\tname:'n2',\tisParent:false},{ id:'03',\tname:'n3',\tisParent:true},{ id:'04',\tname:'n4',\tisParent:false}]";
         strTreeNodes = Arrays.toString(strArray);
@@ -246,6 +247,37 @@ public class TreeResource {
             response.close();
         }
 //        return result;
+        return array.toString();
+    }
+
+    /**
+     * 传入IDS
+     * @param body
+     * { "ids" : "4101,4102,4103,4104"}
+     * @return
+     * @throws JsonParseException
+     * @throws IOException
+     */
+    @PostMapping("/v1/syncLeftToRight")
+    @Timed
+    public String syncLeftToRight(@RequestBody String body) throws JsonParseException,IOException {
+        String result = null;
+        List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
+        JSONObject json = new JSONObject();
+        ObjectMapper mapper = new ObjectMapper();
+        log.info("body="+body);
+        JsonNode actualObj = mapper.readTree(body);
+        String ids = actualObj.get("ids").toString();
+        log.info("ids="+ids);
+        cn.hutool.json.JSONArray array = JSONUtil.createArray();
+        try {
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+
+        }
         return array.toString();
     }
 
