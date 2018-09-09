@@ -134,6 +134,17 @@
             }
         }
 
+        //左到右同步
+        function syncLeftToRight() {
+            var leftzTree = $.fn.zTree.getZTreeObj("leftTree"),
+                leftnodes = leftzTree.getCheckedNodes();
+            console.log("leftnodes="+leftnodes.length);
+            for(var i=0;i<leftnodes.length;i++){
+                console.log("leftnodes="+leftnodes[i].id);
+            }
+
+        }
+
         function reset() {
             if (!check()) {
                 return;
@@ -153,12 +164,9 @@
         }
 
         $(document).ready(function(){
-
             $.fn.zTree.init($("#treeDemo"), setting);
-
             $.fn.zTree.init($("#leftTree"), leftTreeSetting);
-
-            $("#expandAllBtn").bind("click", expandAll);
+            $("#syncLeftToRight").bind("click", syncLeftToRight);
             $("#asyncAllBtn").bind("click", asyncAll);
             $("#resetBtn").bind("click", reset);
 
@@ -170,20 +178,33 @@
 
 <BODY>
 
-<div id="cc" class="easyui-layout" style="width:100%;height:400px;">
-    <div data-options="region:'north',title:'North Title',split:true" style="height:100px;"></div>
+<div id="cc" class="easyui-layout" style="width:100%;height:700px;">
+    <div data-options="region:'south',title:'South Title',split:true" style="height:300px;">
+            <ul class="info">
+                <li class="title">
+                    <ul class="list">
+                        <li><p>
+                            [ <a id="syncLeftToRight" href="#" onclick="return false;">左到右同步</a> ]&nbsp;&nbsp;&nbsp;&nbsp;[ <a id="addNodeSilent" href="#" onclick="return false;">ws同步</a> ]<br/>
+                            async log:<br/>
+                            <ul id="log" class="log"></ul></p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 
-    <div data-options="region:'west',title:'West',split:true" style="width:50%;padding:5px;">
+    </div>
+    <div data-options="region:'west',title:'West',split:true" style="width:50%;padding:5px;height:300px;">
         <div class="zTreeDemoBackground left">
             <ul id="leftTree" class="ztree"></ul>
         </div>
 
     </div>
-    <div data-options="region:'center',title:'center title'" style="width: 50%;padding:5px;background:#eee;">
+    <div data-options="region:'center',title:'center title'" style="width: 50%;padding:5px;background:#eee;height:300px;">
         <div class="zTreeDemoBackground right">
             <ul id="treeDemo" class="ztree"></ul>
         </div>
     </div>
+
 </div>
 
 </BODY>

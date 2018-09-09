@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.mycompany.myapp.domain.MxpmsSearchEquipment;
+import com.mycompany.myapp.service.MxpmsSearchEquipmentService;
+import com.mycompany.myapp.service.dto.MxpmsSearchEquipmentDTO;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -25,12 +27,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 //import com.aspose.cad.imageoptions.PdfOptions;
@@ -47,6 +54,12 @@ public class TreeResource {
 
 
     private final Logger log = LoggerFactory.getLogger(TreeResource.class);
+
+    private final MxpmsSearchEquipmentService mxpmsSearchEquipmentService;
+
+    public TreeResource(MxpmsSearchEquipmentService mxpmsSearchEquipmentService) {
+        this.mxpmsSearchEquipmentService = mxpmsSearchEquipmentService;
+    }
 
     static {
         // httpClient 静态初始化
@@ -75,7 +88,25 @@ public class TreeResource {
     @Timed
     public String getNodes(@RequestParam("pid") String pid) {
         log.info("从数据库中取节点");
-        return "[{ id:'01',\tname:'n1',\tisParent:true},{ id:'02',\tname:'n2',\tisParent:false},{ id:'03',\tname:'n3',\tisParent:true},{ id:'04',\tname:'n4',\tisParent:false}]";
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        Pageable pageable = new PageRequest(0, 20, sort);
+        Page<MxpmsSearchEquipmentDTO> page = mxpmsSearchEquipmentService.findAll(pageable);
+        log.info("page.getSize()="+page.getSize()+"page="+page);
+        log.info(page.getContent().size()+"page.getContent()="+page.getContent());
+
+        MxpmsSearchEquipmentDTO[] array = new MxpmsSearchEquipmentDTO[page.getContent().size()];
+        page.getContent().toArray(array); // fill the array
+        log.info("array="+array.toString());
+        String strTreeNodes = page.getContent().toString();
+        String[] strArray = new String[page.getContent().size()];
+        for(int i=0;i<page.getContent().size();i++){
+            String tempName = ((MxpmsSearchEquipmentDTO)array[i]).getName();
+            strArray[i] = "{ id:'01',\tname:'"+tempName+"',\tisParent:true}";
+        }
+//        strTreeNodes = "[{ id:'01',\tname:'n1',\tisParent:true},{ id:'02',\tname:'n2',\tisParent:false},{ id:'03',\tname:'n3',\tisParent:true},{ id:'04',\tname:'n4',\tisParent:false}]";
+        strTreeNodes = Arrays.toString(strArray);
+        log.info("strTreeNodes="+strTreeNodes);
+        return strTreeNodes;
     }
 
 
