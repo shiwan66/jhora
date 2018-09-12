@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.mycompany.myapp.config.ApplicationProperties;
 import com.mycompany.myapp.domain.MxpmsSearchEquipment;
 import com.mycompany.myapp.service.MxpmsSearchEquipmentService;
 import com.mycompany.myapp.service.dto.MxpmsSearchEquipmentDTO;
@@ -57,8 +58,13 @@ public class TreeResource {
 
     private final MxpmsSearchEquipmentService mxpmsSearchEquipmentService;
 
-    public TreeResource(MxpmsSearchEquipmentService mxpmsSearchEquipmentService) {
+    ApplicationProperties applicationProperties;
+
+
+
+    public TreeResource(MxpmsSearchEquipmentService mxpmsSearchEquipmentService, ApplicationProperties applicationProperties) {
         this.mxpmsSearchEquipmentService = mxpmsSearchEquipmentService;
+        this.applicationProperties = applicationProperties;
     }
 
     static {
@@ -130,6 +136,7 @@ public class TreeResource {
             ObjectMapper mapper = new ObjectMapper();
 //            HttpPost httpPost = new HttpPost(url);
             HttpGet httpGet = new HttpGet(url);
+            log.info("pid="+pid);
             String queryTerm = "{\"size\" : 100,\"query\" : {\"bool\" : {\"filter\" : {\"term\" : {\"pid\" : \""+pid+"\"}}}}}";
             log.info("queryTerm="+queryTerm);
             StringEntity stringEntity = new StringEntity(queryTerm);
@@ -160,11 +167,12 @@ public class TreeResource {
                         for(int i =0;i<child1.length();i++){
                             JSONObject o = (JSONObject)child1.get(i);
                             JSONObject _sourceObj = (JSONObject)o.getJSONObject("_source");
-                            log.info("child1 "+_sourceObj.get("obj_id"));
+//                            log.info("child1 "+_sourceObj.get("obj_id"));
                             log.info("child1 名称 "+_sourceObj.get("name"));
                             cn.hutool.json.JSONObject json1 = JSONUtil.createObj();
-                            json1.put("id", _sourceObj.get("obj_id"));
+//                            json1.put("id", _sourceObj.get("id"));
                             json1.put("name", _sourceObj.get("name"));
+                            json1.put("obj_id", _sourceObj.get("obj_id"));
                             array.add(json1);
                         }
                     }
@@ -260,25 +268,102 @@ public class TreeResource {
      */
     @PostMapping("/v1/syncLeftToRight")
     @Timed
-    public String syncLeftToRight(@RequestBody String body) throws JsonParseException,IOException {
+    public String syncLeftToRightV1(@RequestBody String body) throws JsonParseException,IOException {
+        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+
+        System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
+
+        System.setProperty("org.apache.commons.logging.simplelog.log.httpclient.wire.header", "debug");
+
+        System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
+
         String result = null;
         List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
-        JSONObject json = new JSONObject();
         ObjectMapper mapper = new ObjectMapper();
         log.info("body="+body);
-        JsonNode actualObj = mapper.readTree(body);
-        String ids = actualObj.get("ids").toString();
-        log.info("ids="+ids);
-        cn.hutool.json.JSONArray array = JSONUtil.createArray();
+        String [] stringArr= body.toString().split(",");
+        String index = "equipment/unit";
+        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/_doc" ;
+        HttpPost httpPost = new HttpPost(url);
+        log.info("applicationProperties="+applicationProperties.getES().getHost()+";url="+url);
+        CloseableHttpResponse response = null;
         try {
-
-
+            for(int i=0;i<stringArr.length;i++){
+                String str = stringArr[i];
+                str = str.replace("\"", "");
+                long num = Long.parseLong(str);
+                MxpmsSearchEquipmentDTO mxpmsSearchEquipmentDTO=mxpmsSearchEquipmentService.findOne(num);
+                log.info("stringArr["+i+"]="+str+";num="+num+"；mxpmsSearchEquipmentDTO="+mxpmsSearchEquipmentDTO);
+                JSONObject json = new JSONObject();
+                json.put("name",mxpmsSearchEquipmentDTO.getName());
+                json.put("orgid",mxpmsSearchEquipmentDTO.getOrgid());
+                json.put("obj_id",mxpmsSearchEquipmentDTO.getObjId());
+                StringEntity stringEntity = new StringEntity(json.toString());
+                log.info("stringEntity="+stringEntity.toString());
+                httpPost.setEntity(stringEntity);
+                response = httpClient.execute(httpPost);
+                int statusCode = response.getStatusLine().getStatusCode();
+                if(HttpStatus.OK.value() == statusCode){
+                    log.info("成功状态statusCode="+statusCode);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-
+            response.close();
         }
-        return array.toString();
+        return stringArr.toString();
+    }
+
+    /**
+     * sql 搜索
+     * @param params
+     * @param body
+     * @return
+     * @throws JsonParseException
+     * @throws IOException
+     */
+    @PostMapping("/v4/searchIndex")
+    @Timed
+    public String searchIndexV4(String params,@RequestBody String body) throws JsonParseException,IOException {
+        // http://www.baeldung.com/httpclient-post-http-request
+        // https://my.oschina.net/u/1270482/blog/212389
+        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+
+        System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
+
+        System.setProperty("org.apache.commons.logging.simplelog.log.httpclient.wire.header", "debug");
+
+        System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
+
+        String result = null;
+        List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
+
+//      String url = "http://127.0.0.1:9200/_sql?sql=select%20*%20from%20equipment%20limit%203";
+        String ual = "http://127.0.0.1:9200/_sql?sql=select%20*%20from%20equipment%20limit%203";
+        String query = "select * from equipment limit 3";
+        String url = "http://127.0.0.1:9200/_sql?sql="+java.net.URLEncoder.encode(query, "UTF-8").replace("+", "%20");
+        log.info("url="+url);
+        JSONObject json = new JSONObject();
+        ObjectMapper mapper = new ObjectMapper();
+        HttpGet httpGet = new HttpGet(url);
+        CloseableHttpResponse response = httpClient.execute(httpGet);
+        try {
+            int statusCode = response.getStatusLine().getStatusCode();
+            if(HttpStatus.OK.value() == statusCode){
+                HttpEntity entity = response.getEntity();
+                if (entity != null){
+                    result = EntityUtils.toString(entity, "utf-8");
+                    log.info("result="+result);
+                }
+                EntityUtils.consume(entity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            response.close();
+        }
+        return result;
     }
 
     @GetMapping("/v1/exportCADtoImage")

@@ -25,7 +25,7 @@
         var setting = {
             async: {
                 enable: true,
-                url:"../../../api/tree/v1/getESNodes?pid=pddkx_zsbyqGroup@SBID00000026ECABF0AED648E18F470B48C0DD4F4D",
+                url:"../../../api/tree/v1/getESNodes?pid=1",
                 autoParam:["id", "name=n", "level=lv"],
                 dataFilter: filter,
                 type: "get"
@@ -139,13 +139,13 @@
             var leftzTree = $.fn.zTree.getZTreeObj("leftTree"),
                 leftnodes = leftzTree.getCheckedNodes();
 
-            var query = "";
+            var a1=new Array();
             for(var i=0;i<leftnodes.length;i++){
-
-                query = query +","+ leftnodes[i].id;
+                a1.push(leftnodes[i].id)
             }
-            var obj = new Object();
-            obj.ids = query;
+            // var obj = new Object();
+            // obj.ids = a1.toString();
+            console.log("a1.toString()="+a1.toString());
             var access_token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTUzODkwNDk1NH0.YRbaDvOicDRLQrABJqWmgtTNP9QkeK_InsoBqbrL5hzBJqSQz5jh_8xD-o_d39am0VFDtgVzqvPPnDBKB89LhQ";
             var url = '../../../api/tree/v1/syncLeftToRight';
             $.ajax({
@@ -158,8 +158,9 @@
                 // crossDomain:true,
                 async:false,
                 dataType:"json",
-                data:JSON.stringify(obj),
+                data:JSON.stringify(a1.toString()),
                 success:function(data){
+                    console.log("data="+data);
                 },
                 error:function(){
                     alert("error 服务器返回失败");

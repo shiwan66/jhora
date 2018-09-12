@@ -149,3 +149,6 @@ application:
             min-idle: 0
         port: 6379
         upload-dir: ./uploads
+    es:
+        host: localhost
+        port: 9200

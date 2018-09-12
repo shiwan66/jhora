@@ -12,8 +12,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ApplicationProperties {
     public final UploadFileParam uploadFileParam = new UploadFileParam();
 
+    private final ES es = new ES();
+
     public UploadFileParam getUploadFileParam() {
         return uploadFileParam;
+    }
+
+    public ES getES() {
+        return es;
     }
 
     public static class UploadFileParam {
@@ -99,5 +105,27 @@ public class ApplicationProperties {
             }
         }
 
+    }
+
+    public static class ES {
+        private String host = "192.168.99.100";
+
+        private int port = 9200;
+
+        public String getHost() {
+            return host;
+        }
+
+        public void setHost(String host) {
+            this.host = host;
+        }
+
+        public int getPort() {
+            return port;
+        }
+
+        public void setPort(int port) {
+            this.port = port;
+        }
     }
 }
