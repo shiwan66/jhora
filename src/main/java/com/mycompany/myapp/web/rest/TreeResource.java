@@ -269,15 +269,6 @@ public class TreeResource {
     @PostMapping("/v1/syncLeftToRight")
     @Timed
     public String syncLeftToRightV1(@RequestBody String body) throws JsonParseException,IOException {
-        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
-
-        System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
-
-        System.setProperty("org.apache.commons.logging.simplelog.log.httpclient.wire.header", "debug");
-
-        System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.commons.httpclient", "debug");
-
-        String result = null;
         List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
         ObjectMapper mapper = new ObjectMapper();
         log.info("body="+body);
@@ -287,6 +278,50 @@ public class TreeResource {
         HttpPost httpPost = new HttpPost(url);
         log.info("applicationProperties="+applicationProperties.getES().getHost()+";url="+url);
         CloseableHttpResponse response = null;
+        int statusCode = 0;
+        try {
+            for(int i=0;i<stringArr.length;i++){
+                String str = stringArr[i];
+                str = str.replace("\"", "");
+                long num = Long.parseLong(str);
+                MxpmsSearchEquipmentDTO mxpmsSearchEquipmentDTO=mxpmsSearchEquipmentService.findOne(num);
+                log.info("stringArr["+i+"]="+str+";num="+num+"；mxpmsSearchEquipmentDTO="+mxpmsSearchEquipmentDTO);
+                JSONObject json = new JSONObject();
+                json.put("name",mxpmsSearchEquipmentDTO.getName());
+                json.put("orgid",mxpmsSearchEquipmentDTO.getOrgid());
+                json.put("obj_id",mxpmsSearchEquipmentDTO.getObjId());
+                StringEntity stringEntity = new StringEntity(json.toString(),"UTF-8");
+                log.info("stringEntity="+stringEntity.toString());
+                //post.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+                httpPost.setEntity(stringEntity);
+                response = httpClient.execute(httpPost);
+                statusCode = response.getStatusLine().getStatusCode();
+                if(HttpStatus.OK.value() == statusCode){
+                    log.info("成功状态statusCode="+statusCode);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            response.close();
+        }
+        return statusCode+"";
+    }
+
+    @PostMapping("/v1/syncLeftToRightBulk")
+    @Timed
+    public String syncLeftToRightBulkV1(@RequestBody String body) throws JsonParseException,IOException {
+        List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
+        ObjectMapper mapper = new ObjectMapper();
+        log.info("body="+body);
+        String [] stringArr= body.toString().split(",");
+        String index = "equipment/unit";
+        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/_doc" ;
+        HttpPost httpPost = new HttpPost(url);
+        log.info("applicationProperties="+applicationProperties.getES().getHost()+";url="+url);
+        CloseableHttpResponse response = null;
+        int statusCode = 0;
         try {
             for(int i=0;i<stringArr.length;i++){
                 String str = stringArr[i];
@@ -302,7 +337,7 @@ public class TreeResource {
                 log.info("stringEntity="+stringEntity.toString());
                 httpPost.setEntity(stringEntity);
                 response = httpClient.execute(httpPost);
-                int statusCode = response.getStatusLine().getStatusCode();
+                statusCode = response.getStatusLine().getStatusCode();
                 if(HttpStatus.OK.value() == statusCode){
                     log.info("成功状态statusCode="+statusCode);
                 }
@@ -312,7 +347,7 @@ public class TreeResource {
         }finally {
             response.close();
         }
-        return stringArr.toString();
+        return statusCode+"";
     }
 
     /**
@@ -362,6 +397,7 @@ public class TreeResource {
             e.printStackTrace();
         }finally {
             response.close();
+            log.info("finale response 关闭");
         }
         return result;
     }
