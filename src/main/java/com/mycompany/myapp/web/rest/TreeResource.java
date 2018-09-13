@@ -274,7 +274,7 @@ public class TreeResource {
         log.info("body="+body);
         String [] stringArr= body.toString().split(",");
         String index = "equipment/unit";
-        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/_doc" ;
+        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/" ;
         HttpPost httpPost = new HttpPost(url);
         log.info("applicationProperties="+applicationProperties.getES().getHost()+";url="+url);
         CloseableHttpResponse response = null;
@@ -292,8 +292,6 @@ public class TreeResource {
                 json.put("obj_id",mxpmsSearchEquipmentDTO.getObjId());
                 StringEntity stringEntity = new StringEntity(json.toString(),"UTF-8");
                 log.info("stringEntity="+stringEntity.toString());
-                //post.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-
                 httpPost.setEntity(stringEntity);
                 response = httpClient.execute(httpPost);
                 statusCode = response.getStatusLine().getStatusCode();
@@ -317,7 +315,7 @@ public class TreeResource {
         log.info("body="+body);
         String [] stringArr= body.toString().split(",");
         String index = "equipment/unit";
-        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/_doc" ;
+        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/" ;
         HttpPost httpPost = new HttpPost(url);
         log.info("applicationProperties="+applicationProperties.getES().getHost()+";url="+url);
         CloseableHttpResponse response = null;
@@ -328,13 +326,12 @@ public class TreeResource {
                 str = str.replace("\"", "");
                 long num = Long.parseLong(str);
                 MxpmsSearchEquipmentDTO mxpmsSearchEquipmentDTO=mxpmsSearchEquipmentService.findOne(num);
-                log.info("stringArr["+i+"]="+str+";num="+num+"；mxpmsSearchEquipmentDTO="+mxpmsSearchEquipmentDTO);
                 JSONObject json = new JSONObject();
                 json.put("name",mxpmsSearchEquipmentDTO.getName());
                 json.put("orgid",mxpmsSearchEquipmentDTO.getOrgid());
                 json.put("obj_id",mxpmsSearchEquipmentDTO.getObjId());
-                StringEntity stringEntity = new StringEntity(json.toString());
-                log.info("stringEntity="+stringEntity.toString());
+                log.info("json.toString()="+json.toString());
+                StringEntity stringEntity = new StringEntity(json.toString(),"UTF-8");
                 httpPost.setEntity(stringEntity);
                 response = httpClient.execute(httpPost);
                 statusCode = response.getStatusLine().getStatusCode();
