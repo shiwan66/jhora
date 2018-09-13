@@ -83,4 +83,14 @@ public class MxpmsSearchEquipmentServiceImpl implements MxpmsSearchEquipmentServ
         log.debug("Request to delete MxpmsSearchEquipment : {}", id);
         mxpmsSearchEquipmentRepository.delete(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MxpmsSearchEquipmentDTO> findByPid(String pid, Pageable pageable) {
+        log.debug("Request to get all MxpmsSearchEquipments");
+        log.info("Impl方法:pid="+pid);
+        return mxpmsSearchEquipmentRepository.findByPid(pid,pageable)
+            .map(mxpmsSearchEquipmentMapper::toDto);
+
+    }
 }

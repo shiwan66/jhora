@@ -143,11 +143,11 @@
             for(var i=0;i<leftnodes.length;i++){
                 a1.push(leftnodes[i].id)
             }
-            // var obj = new Object();
-            // obj.ids = a1.toString();
+
             console.log("a1.toString()="+a1.toString());
             var access_token="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTUzODkwNDk1NH0.YRbaDvOicDRLQrABJqWmgtTNP9QkeK_InsoBqbrL5hzBJqSQz5jh_8xD-o_d39am0VFDtgVzqvPPnDBKB89LhQ";
-            var url = '../../../api/tree/v1/syncLeftToRight';
+            // var url = '../../../api/tree/v1/syncLeftToRight';
+            var url = '../../../api/tree/v1/syncLeftToRightBulk';
             $.ajax({
                 type:"post",
                 url: url,
@@ -155,12 +155,13 @@
                     'Authorization':'Bearer '+access_token,
                     'Content-Type':'text/plain'
                 },
-                // crossDomain:true,
-                async:false,
+                // async:false,
                 dataType:"json",
                 data:JSON.stringify(a1.toString()),
                 success:function(data){
                     console.log("data="+data);
+                    var zTree= $.fn.zTree.getZTreeObj("treeDemo");
+                    zTree.refresh();
                 },
                 error:function(){
                     alert("error 服务器返回失败");

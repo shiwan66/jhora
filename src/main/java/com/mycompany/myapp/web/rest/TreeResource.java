@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -94,12 +93,10 @@ public class TreeResource {
     @Timed
     public String getNodes(@RequestParam("pid") String pid) {
         log.info("从数据库中取节点");
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        Pageable pageable = new PageRequest(0, 20, sort);
-        Page<MxpmsSearchEquipmentDTO> page = mxpmsSearchEquipmentService.findAll(pageable);
-        log.info("page.getSize()="+page.getSize()+"page="+page);
-        log.info(page.getContent().size()+"page.getContent()="+page.getContent());
-
+        Pageable pageable = new PageRequest(0, 20);
+        Page<MxpmsSearchEquipmentDTO> page = mxpmsSearchEquipmentService.findByPid(pid,pageable);
+        log.info("父节点参数=== pid="+pid+";page.getSize()="+page.getSize()+"page="+page);
+        log.info("翻页查出的结果 page.getContent().size()="+page.getContent().size()+"page.getContent()="+page.getContent());
         MxpmsSearchEquipmentDTO[] array = new MxpmsSearchEquipmentDTO[page.getContent().size()];
         page.getContent().toArray(array); // fill the array
         log.info("array="+array.toString());
