@@ -91,19 +91,6 @@
                 }
             }
         }
-        function expandNodes(nodes) {
-            if (!nodes) return;
-            curStatus = "expand";
-            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-            for (var i=0, l=nodes.length; i<l; i++) {
-                zTree.expandNode(nodes[i], true, false, false);
-                if (nodes[i].isParent && nodes[i].zAsync) {
-                    expandNodes(nodes[i].children);
-                } else {
-                    goAsync = true;
-                }
-            }
-        }
 
         function asyncAll() {
             if (!check()) {

@@ -21,6 +21,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
@@ -50,7 +51,7 @@ import java.util.Map;
 @RequestMapping("/api/tree")
 public class TreeResource {
 
-    private static final CloseableHttpClient httpClient;
+//    private static final CloseableHttpClient httpClient;
 
 
     private final Logger log = LoggerFactory.getLogger(TreeResource.class);
@@ -66,11 +67,11 @@ public class TreeResource {
         this.applicationProperties = applicationProperties;
     }
 
-    static {
-        // httpClient 静态初始化
-        RequestConfig config = RequestConfig.custom().setConnectTimeout(60000).setSocketTimeout(15000).build();
-        httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
-    }
+//    static {
+//        // httpClient 静态初始化
+//        RequestConfig config = RequestConfig.custom().setConnectTimeout(60000).setSocketTimeout(15000).build();
+//        httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+//    }
 
 
 
@@ -125,6 +126,7 @@ public class TreeResource {
     @Timed
     public String getESNodes(@RequestParam("pid") String pid) throws UnsupportedEncodingException,IOException {
         {
+            CloseableHttpClient client = HttpClients.createDefault();
             String result = null;
             List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
             String index = "equipment/unit";
@@ -139,8 +141,8 @@ public class TreeResource {
             StringEntity stringEntity = new StringEntity(queryTerm);
             stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 //            httpPost.setEntity(stringEntity);
-            log.info("httpClient="+httpClient+";httpPost="+httpGet);
-            CloseableHttpResponse response = httpClient.execute(httpGet);
+            log.info("httpClient="+client+";httpPost="+httpGet);
+            CloseableHttpResponse response = client.execute(httpGet);
             cn.hutool.json.JSONArray array = JSONUtil.createArray();
             try {
                 int statusCode = response.getStatusLine().getStatusCode();
@@ -193,6 +195,7 @@ public class TreeResource {
     public String searchIndexV3(String params,@RequestBody String body) throws JsonParseException,IOException {
         // http://www.baeldung.com/httpclient-post-http-request
         // https://my.oschina.net/u/1270482/blog/212389
+        CloseableHttpClient client = HttpClients.createDefault();
         String result = null;
         List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
         String index = "equipment/unit";
@@ -205,8 +208,8 @@ public class TreeResource {
         StringEntity stringEntity = new StringEntity(body);
         stringEntity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         httpPost.setEntity(stringEntity);
-        log.info("httpClient="+httpClient+";httpPost="+httpPost);
-        CloseableHttpResponse response = httpClient.execute(httpPost);
+        log.info("httpClient="+client+";client="+httpPost);
+        CloseableHttpResponse response = client.execute(httpPost);
         cn.hutool.json.JSONArray array = JSONUtil.createArray();
         try {
             int statusCode = response.getStatusLine().getStatusCode();
@@ -266,12 +269,14 @@ public class TreeResource {
     @PostMapping("/v1/syncLeftToRight")
     @Timed
     public String syncLeftToRightV1(@RequestBody String body) throws JsonParseException,IOException {
+        CloseableHttpClient client = HttpClients.createDefault();
+
         List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
         ObjectMapper mapper = new ObjectMapper();
         log.info("body="+body);
         String [] stringArr= body.toString().split(",");
         String index = "equipment/unit";
-        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/" ;
+        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index +"/_doc";
         HttpPost httpPost = new HttpPost(url);
         log.info("applicationProperties="+applicationProperties.getES().getHost()+";url="+url);
         CloseableHttpResponse response = null;
@@ -290,10 +295,10 @@ public class TreeResource {
                 StringEntity stringEntity = new StringEntity(json.toString(),"UTF-8");
                 log.info("stringEntity="+stringEntity.toString());
                 httpPost.setEntity(stringEntity);
-                response = httpClient.execute(httpPost);
+                response = client.execute(httpPost);
                 statusCode = response.getStatusLine().getStatusCode();
                 if(HttpStatus.OK.value() == statusCode){
-                    log.info("成功状态statusCode="+statusCode);
+                    log.info("添加设备:"+mxpmsSearchEquipmentDTO.getName()+";成功状态statusCode="+statusCode);
                 }
             }
         } catch (Exception e) {
@@ -307,41 +312,50 @@ public class TreeResource {
     @PostMapping("/v1/syncLeftToRightBulk")
     @Timed
     public String syncLeftToRightBulkV1(@RequestBody String body) throws JsonParseException,IOException {
+        String result = null;
         List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
         ObjectMapper mapper = new ObjectMapper();
         log.info("body="+body);
         String [] stringArr= body.toString().split(",");
         String index = "equipment/unit";
-        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/" ;
-        HttpPost httpPost = new HttpPost(url);
-        log.info("applicationProperties="+applicationProperties.getES().getHost()+";url="+url);
+//        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index+"/_doc" ;
+        String url = "http://"+applicationProperties.getES().getHost()+":"+applicationProperties.getES().getPort()+"/" + index ;
+
+
         CloseableHttpResponse response = null;
-        int statusCode = 0;
         try {
             for(int i=0;i<stringArr.length;i++){
                 String str = stringArr[i];
                 str = str.replace("\"", "");
                 long num = Long.parseLong(str);
                 MxpmsSearchEquipmentDTO mxpmsSearchEquipmentDTO=mxpmsSearchEquipmentService.findOne(num);
+                log.info("stringArr["+i+"]="+str+";num="+num+"；mxpmsSearchEquipmentDTO="+mxpmsSearchEquipmentDTO);
                 JSONObject json = new JSONObject();
                 json.put("name",mxpmsSearchEquipmentDTO.getName());
                 json.put("orgid",mxpmsSearchEquipmentDTO.getOrgid());
                 json.put("obj_id",mxpmsSearchEquipmentDTO.getObjId());
-                log.info("json.toString()="+json.toString());
+                json.put("pid",mxpmsSearchEquipmentDTO.getPid());
                 StringEntity stringEntity = new StringEntity(json.toString(),"UTF-8");
+                log.info("stringEntity="+stringEntity.toString());
+                CloseableHttpClient client = HttpClients.createDefault();
+                HttpPost httpPost = new HttpPost(url);
+                log.info("applicationProperties="+applicationProperties.getES().getHost()+";url="+url);
                 httpPost.setEntity(stringEntity);
-                response = httpClient.execute(httpPost);
-                statusCode = response.getStatusLine().getStatusCode();
+                response = client.execute(httpPost);
+                int statusCode = response.getStatusLine().getStatusCode();
                 if(HttpStatus.OK.value() == statusCode){
-                    log.info("成功状态statusCode="+statusCode);
+                    log.info("======== 添加设备:"+mxpmsSearchEquipmentDTO.getName()+";成功状态statusCode="+statusCode);
+
                 }
+                response.close();
+                client.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
             response.close();
         }
-        return statusCode+"";
+        return "200";
     }
 
     /**
@@ -357,6 +371,8 @@ public class TreeResource {
     public String searchIndexV4(String params,@RequestBody String body) throws JsonParseException,IOException {
         // http://www.baeldung.com/httpclient-post-http-request
         // https://my.oschina.net/u/1270482/blog/212389
+        CloseableHttpClient client = HttpClients.createDefault();
+
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
 
         System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
@@ -376,7 +392,7 @@ public class TreeResource {
         JSONObject json = new JSONObject();
         ObjectMapper mapper = new ObjectMapper();
         HttpGet httpGet = new HttpGet(url);
-        CloseableHttpResponse response = httpClient.execute(httpGet);
+        CloseableHttpResponse response = client.execute(httpGet);
         try {
             int statusCode = response.getStatusLine().getStatusCode();
             if(HttpStatus.OK.value() == statusCode){

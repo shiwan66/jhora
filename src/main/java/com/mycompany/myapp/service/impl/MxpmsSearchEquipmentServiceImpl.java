@@ -87,8 +87,7 @@ public class MxpmsSearchEquipmentServiceImpl implements MxpmsSearchEquipmentServ
     @Override
     @Transactional(readOnly = true)
     public Page<MxpmsSearchEquipmentDTO> findByPid(String pid, Pageable pageable) {
-        log.debug("Request to get all MxpmsSearchEquipments");
-        log.info("Impl方法:pid="+pid);
+        log.debug("根据pid翻页查询 MxpmsSearchEquipments");
         return mxpmsSearchEquipmentRepository.findByPid(pid,pageable)
             .map(mxpmsSearchEquipmentMapper::toDto);
 

@@ -40,5 +40,11 @@ public interface MxpmsSearchEquipmentService {
      */
     void delete(Long id);
 
+    /**
+     * 自定义翻页查询 根据 pid 查询
+     * @param pid
+     * @param pageable
+     * @return
+     */
     Page<MxpmsSearchEquipmentDTO> findByPid(String pid,Pageable pageable);
 }
