@@ -21,6 +21,6 @@
         <loadData encoding="UTF-8"
                   file="config/liquibase/equipment.csv"
                   separator=";"
-                  tableName="jhi_user_authority"/>
+                  tableName="mxpms_search_equipment"/>
     </changeSet>
 </databaseChangeLog>
