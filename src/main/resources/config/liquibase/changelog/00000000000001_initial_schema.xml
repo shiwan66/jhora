@@ -9,10 +9,6 @@
     <property name="now" value="now()" dbms="h2"/>
     <property name="now" value="sysdate" dbms="oracle"/>
 
-    <changeSet id="00000000000001" author="jhipster">
-        <createSequence sequenceName="hibernate_sequence" startValue="1000" incrementBy="50"/>
-    </changeSet>
-
     <!--
         JHipster core tables.
         The initial schema has the '00000000000001' id, so that it is over-written if we re-generate it.
