@@ -27,7 +27,7 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:oracle:thin:@liquidbase-ip:49161:xe
+        url: jdbc:oracle:thin:@liquidbase-ip:1521:xe
         username: dwzy
         password: dwzy
     jpa:
