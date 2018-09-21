@@ -535,7 +535,7 @@
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                     <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                     <driver>oracle.jdbc.OracleDriver</driver>
-                    <url>jdbc:oracle:thin:@liquidbase-ip:49161:xe</url>
+                    <url>jdbc:oracle:thin:@liquidbase-ip:1521:xe</url>
                     <defaultSchemaName>dwzy</defaultSchemaName>
                     <username>dwzy</username>
                     <password>dwzy</password>
