@@ -32,7 +32,7 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:oracle:thin:@192.168.99.100:49161:xe
+        url: jdbc:oracle:thin:@192.168.99.100:1521:xe
         username: dwzy
         password: dwzy
     jpa:
