@@ -30,6 +30,14 @@
                 dataFilter: filter,
                 type: "get"
             },
+            data: {
+                simpleData: {//是否为简单数据类型JSON
+                    enable:true,
+                    idKey: "id",//使用简单必须标明的的节点对应字段
+                    pIdKey: "pId",//使用简单必须标明的的父节点对应字段
+                    rootPId:null//根
+                }
+            },
             check: {
                 enable: true
             }
