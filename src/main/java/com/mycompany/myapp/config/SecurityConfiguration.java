@@ -85,7 +85,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .accessDeniedHandler(problemSupport)
             .and()
             .csrf()
-            .disable()
+//            .disable()
             .headers()
             .frameOptions()
             .disable()
