@@ -92,9 +92,11 @@ public class TreeResource {
      */
     @GetMapping("/v1/getNodes")
     @Timed
-    public String getNodes(@RequestParam("pid") String pid) {
+    public String getNodes(@RequestParam("id") String id) {
         log.info("从数据库中取节点");
         Pageable pageable = new PageRequest(0, 20);
+        // 默认是 1 怎么取 id
+        String pid = "1";
         Page<MxpmsSearchEquipmentDTO> page = mxpmsSearchEquipmentService.findByPid(pid,pageable);
         log.info("父节点参数=== pid="+pid+";page.getSize()="+page.getSize()+"page="+page);
         log.info("翻页查出的结果 page.getContent().size()="+page.getContent().size()+"page.getContent()="+page.getContent());
@@ -106,7 +108,9 @@ public class TreeResource {
         for(int i=0;i<page.getContent().size();i++){
             String tempName = ((MxpmsSearchEquipmentDTO)array[i]).getName();
             String id = ((MxpmsSearchEquipmentDTO)array[i]).getId().toString();
-            strArray[i] = "{ id:'"+id+"',\tname:'"+tempName+"',\tisParent:true}";
+            String ppid = ((MxpmsSearchEquipmentDTO)array[i]).getPid();
+//            strArray[i] = "{ id:'"+id+"',\tname:'"+tempName+"',\tisParent:true}";
+            strArray[i] = "{ id:'"+id+"',\tpid:'"+ppid+"',\tname:'"+tempName+"',\tisParent:true}";
         }
 //        strTreeNodes = "[{ id:'01',\tname:'n1',\tisParent:true},{ id:'02',\tname:'n2',\tisParent:false},{ id:'03',\tname:'n3',\tisParent:true},{ id:'04',\tname:'n4',\tisParent:false}]";
         strTreeNodes = Arrays.toString(strArray);
