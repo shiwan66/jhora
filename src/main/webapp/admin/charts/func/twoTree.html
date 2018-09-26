@@ -192,16 +192,22 @@
 
             var equipment = [
                 { value: '站外一次设备', data: '12' },
+                { value: '其他', data: '1' },
                 { value: '二次设备', data: '13' }
             ];
 
             $('#autocomplete').autocomplete({
                 lookup: equipment,
                 onSelect: function (suggestion) {
-                    alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                    var leftTree = $.fn.zTree.getZTreeObj("leftTree");
+                    var nodes = leftTree.getNodes();
+                    var node = leftTree.getNodeByParam("id", suggestion.data);
+                    if (node) {
+                        leftTree.selectNode(node);
+                    }
+                    // alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
                 }
             });
-
         });
         //-->
     </SCRIPT>
