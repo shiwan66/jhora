@@ -89,19 +89,15 @@ public class TreeResource {
 
     /**
      * 从数据库中取节点
-     * @param id
      * @return
      */
     @GetMapping("/v1/getNodes")
     @Timed
     public String getNodes(HttpServletRequest request ) {
         log.info("从数据库中取节点");
-        Pageable pageable = new PageRequest(0, 20);
-        // 默认是 1 怎么取 id
         String id = request.getParameter("id");
-        if(id==null)
-            id = "1";
-        String pid = id;
+        String pid = (id != null)? id : "1";
+        Pageable pageable = new PageRequest(0, 20);
         log.info("从数据库中取节点==== pid="+pid);
         Page<MxpmsSearchEquipmentDTO> page = mxpmsSearchEquipmentService.findByPid(pid,pageable);
         log.info("父节点参数=== pid="+pid+";page.getSize()="+page.getSize()+"page="+page);
@@ -127,15 +123,16 @@ public class TreeResource {
 
     /**
      * 从缓存中取节点
-     * @param pid
      * @return
      * @throws UnsupportedEncodingException
      * @throws IOException
      */
     @GetMapping("/v1/getESNodes")
     @Timed
-    public String getESNodes(@RequestParam("pid") String pid) throws UnsupportedEncodingException,IOException {
+    public String getESNodes(HttpServletRequest request) throws UnsupportedEncodingException,IOException {
         {
+            String id = request.getParameter("id");
+            String pid = (id != null)? id : "1";
             CloseableHttpClient client = HttpClients.createDefault();
             String result = null;
             List<MxpmsSearchEquipment> resultList = new ArrayList<MxpmsSearchEquipment>(); // 结果id集合
