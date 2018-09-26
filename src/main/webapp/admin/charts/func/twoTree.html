@@ -193,7 +193,7 @@
             var equipment = [
                 { value: '站外一次设备', data: '12' },
                 { value: '其他', data: '1' },
-                { value: '二次设备', data: '13' }
+                { value: '二次设备', data: '99243F3F-3631-4259-8716-148C9A4B5EC4-00001' }
             ];
 
             $('#autocomplete').autocomplete({
@@ -202,6 +202,7 @@
                     var leftTree = $.fn.zTree.getZTreeObj("leftTree");
                     var nodes = leftTree.getNodes();
                     var node = leftTree.getNodeByParam("id", suggestion.data);
+                    console.log("node="+node+";suggestion.data="+suggestion.data);
                     if (node) {
                         leftTree.selectNode(node);
                     }
