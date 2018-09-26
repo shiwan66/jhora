@@ -96,8 +96,15 @@ public class TreeResource {
     public String getNodes(HttpServletRequest request ) {
         log.info("从数据库中取节点");
         String id = request.getParameter("id");
-        String pid = (id != null)? id : "1";
-        Pageable pageable = new PageRequest(0, 20);
+//         id = (id != null)? id : "1";
+         String pid = "";
+         if(id == null){
+             pid = "1";
+         }else{
+             MxpmsSearchEquipmentDTO mxpmsSearchEquipmentDTO = mxpmsSearchEquipmentService.findOne(new Long(id).longValue());
+             pid = mxpmsSearchEquipmentDTO.getObjId();
+         }
+        Pageable pageable = new PageRequest(0, 2000);
         log.info("从数据库中取节点==== pid="+pid);
         Page<MxpmsSearchEquipmentDTO> page = mxpmsSearchEquipmentService.findByPid(pid,pageable);
         log.info("父节点参数=== pid="+pid+";page.getSize()="+page.getSize()+"page="+page);
