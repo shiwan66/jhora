@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="../js/jquery-easyui-1.5.3/themes/icon.css">
     <script type="text/javascript" src="../js/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="js/leftTree.js"></script>
+    <script type="text/javascript" src="../js/jquery/jquery.autocomplete.min.js"></script>
     <SCRIPT type="text/javascript">
         <!--
         var demoMsg = {
@@ -188,6 +189,19 @@
             $("#syncLeftToRight").bind("click", syncLeftToRight);
             $("#asyncAllBtn").bind("click", asyncAll);
             $("#resetBtn").bind("click", reset);
+
+            var equipment = [
+                { value: '站外一次设备', data: '12' },
+                { value: '二次设备', data: '13' }
+            ];
+
+            $('#autocomplete').autocomplete({
+                lookup: equipment,
+                onSelect: function (suggestion) {
+                    alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                }
+            });
+
         });
         //-->
     </SCRIPT>
@@ -211,7 +225,9 @@
 
     </div>
     <div data-options="region:'west',title:'West',split:true" style="width:50%;padding:5px;height:300px;">
+
         <div class="zTreeDemoBackground left">
+            <ul ><input type="text" name="country" id="autocomplete"/></ul>
             <ul id="leftTree" class="ztree"></ul>
         </div>
 
