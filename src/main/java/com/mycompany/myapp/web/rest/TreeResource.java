@@ -32,9 +32,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -87,16 +89,20 @@ public class TreeResource {
 
     /**
      * 从数据库中取节点
-     * @param pid
+     * @param id
      * @return
      */
     @GetMapping("/v1/getNodes")
     @Timed
-    public String getNodes(@RequestParam("id") String id) {
+    public String getNodes(HttpServletRequest request ) {
         log.info("从数据库中取节点");
         Pageable pageable = new PageRequest(0, 20);
         // 默认是 1 怎么取 id
-        String pid = "1";
+        String id = request.getParameter("id");
+        if(id==null)
+            id = "1";
+        String pid = id;
+        log.info("从数据库中取节点==== pid="+pid);
         Page<MxpmsSearchEquipmentDTO> page = mxpmsSearchEquipmentService.findByPid(pid,pageable);
         log.info("父节点参数=== pid="+pid+";page.getSize()="+page.getSize()+"page="+page);
         log.info("翻页查出的结果 page.getContent().size()="+page.getContent().size()+"page.getContent()="+page.getContent());
@@ -107,10 +113,10 @@ public class TreeResource {
         String[] strArray = new String[page.getContent().size()];
         for(int i=0;i<page.getContent().size();i++){
             String tempName = ((MxpmsSearchEquipmentDTO)array[i]).getName();
-            String id = ((MxpmsSearchEquipmentDTO)array[i]).getId().toString();
+            String iid = ((MxpmsSearchEquipmentDTO)array[i]).getId().toString();
             String ppid = ((MxpmsSearchEquipmentDTO)array[i]).getPid();
 //            strArray[i] = "{ id:'"+id+"',\tname:'"+tempName+"',\tisParent:true}";
-            strArray[i] = "{ id:'"+id+"',\tpid:'"+ppid+"',\tname:'"+tempName+"',\tisParent:true}";
+            strArray[i] = "{ id:'"+iid+"',\tpid:'"+ppid+"',\tname:'"+tempName+"',\tisParent:true}";
         }
 //        strTreeNodes = "[{ id:'01',\tname:'n1',\tisParent:true},{ id:'02',\tname:'n2',\tisParent:false},{ id:'03',\tname:'n3',\tisParent:true},{ id:'04',\tname:'n4',\tisParent:false}]";
         strTreeNodes = Arrays.toString(strArray);
