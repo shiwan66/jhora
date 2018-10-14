@@ -32,7 +32,7 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:oracle:thin:@192.168.99.100:1521:xe
+        url: jdbc:oracle:thin:@docker-ip:1521:xe
         username: dwzy
         password: dwzy
     jpa:
@@ -150,5 +150,5 @@ application:
         port: 6379
         upload-dir: ./uploads
     es:
-        host: localhost
-        port: 9200
+        host: 47.93.98.218
+        port: 39200
