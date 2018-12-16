@@ -22,34 +22,40 @@ node {
 //        sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn"
 //    }
 
-        stage('npm install') {
-        sh "./mvnw com.github.eirslett:frontend-maven-plugin:npm"
-    }
+//        stage('npm install') {
+//        sh "./mvnw com.github.eirslett:frontend-maven-plugin:npm"
+//    }
 
 
-    stage('backend tests') {
-        try {
-            sh "./mvnw test"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/surefire-reports/TEST-*.xml'
-        }
-    }
+//    stage('backend tests') {
+//        try {
+//            sh "./mvnw test"
+//        } catch(err) {
+//            throw err
+//        } finally {
+//            junit '**/target/surefire-reports/TEST-*.xml'
+//        }
+//    }
 
-    stage('frontend tests') {
-        try {
-            sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn -Dfrontend.yarn.arguments=test"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/test-results/karma/TESTS-*.xml'
-        }
-    }
+//    stage('frontend tests') {
+//        try {
+//            sh "./mvnw com.github.eirslett:frontend-maven-plugin:yarn -Dfrontend.yarn.arguments=test"
+//        } catch(err) {
+//            throw err
+//        } finally {
+//            junit '**/target/test-results/karma/TESTS-*.xml'
+//        }
+//    }
 
-    stage('package and deploy') {
-        sh "./mvnw com.heroku.sdk:heroku-maven-plugin:1.1.1:deploy -DskipTests -Pprod -Dheroku.appName="
+//    stage('package and deploy') {
+//        sh "./mvnw com.heroku.sdk:heroku-maven-plugin:1.1.1:deploy -DskipTests -Pprod -Dheroku.appName="
+//        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+//    }
+
+    stage('package') {
+        sh "./mvnw package -DskipTests -Pprod"
         archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
+
 
 }
