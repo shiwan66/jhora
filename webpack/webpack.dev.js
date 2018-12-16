@@ -87,7 +87,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
         new webpack.NamedModulesPlugin(),
         new writeFilePlugin(),
         new webpack.WatchIgnorePlugin([
-            utils.root('src/test'),
+            utils.root('srcw/test'),
         ]),
         new WebpackNotifierPlugin({
             title: 'JHipster',

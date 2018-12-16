@@ -1,0 +1,4 @@
+jhipster:
+    swagger:
+        contactName: com.mycompany.myapp
+        contactEmail: com.mycompany.myapp@example.org
