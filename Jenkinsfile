@@ -16,9 +16,8 @@ node {
 
     stage('Prepare') {
         withEnv(['MYTOOL_HOME=/home/qk/.nvm/versions/node/v8.9.4/bin/']) {
-            sh '$MYTOOL_HOME/bin/start'
+            sh '$MYTOOL_HOME/npm install -g yarn'
         }
-        sh "npm install -g yarn"
     }
 
 //    stage('install tools') {
