@@ -14,11 +14,11 @@ node {
         sh "./mvnw clean"
     }
 
-    stage('Prepare') {
-        withEnv(['MYTOOL_HOME=/home/qk/.nvm/versions/node/v8.9.4/bin']) {
-            sh '$MYTOOL_HOME/npm install -g yarn'
-        }
-    }
+//    stage('Prepare') {
+//        withEnv(['MYTOOL_HOME=/home/qk/.nvm/versions/node/v8.9.4/bin']) {
+//            sh '$MYTOOL_HOME/npm install -g yarn'
+//        }
+//    }
 
 //    stage('install tools') {
 //        sh "./mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v8.9.4 -DyarnVersion=v1.12.3"
@@ -60,7 +60,7 @@ node {
 
     stage('package') {
         sh "./mvnw package -DskipTests -Pprod"
-        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
+//        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
 
 
