@@ -14,9 +14,9 @@ node {
         sh "./mvnw clean"
     }
 
-    stage('Prepare') {
-        sh "npm install -g yarn"
-    }
+//    stage('Prepare') {
+//        sh "npm install -g yarn"
+//    }
 
 //    stage('install tools') {
 //        sh "./mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v8.9.4 -DyarnVersion=v1.12.3"
