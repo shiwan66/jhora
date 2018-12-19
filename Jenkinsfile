@@ -59,7 +59,7 @@ node {
 //    }
 
     stage('package') {
-        sh "mvn package -DskipTests -Dhttps.protocols=TLSv1.2 -Pprod"
+        sh "./mvnw package -DskipTests -Dhttps.protocols=TLSv1.2 -Pprod"
 //        archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
     }
 
