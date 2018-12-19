@@ -779,6 +779,7 @@
                                 <configuration>
                                     <nodeVersion>${node.version}</nodeVersion>
                                     <yarnVersion>${yarn.version}</yarnVersion>
+                                        <downloadRoot>https://npm.taobao.org/mirrors/yarn<downloadRoot>
                                 </configuration>
                             </execution>
                             <execution>
